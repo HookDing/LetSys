@@ -23,7 +23,7 @@
 
             //设置datatable的属性
 
-            //查询全部，不分页
+            // 查询全部，不分页
             //$("#dataTable").datagrid({
             //    url: "/Employs/GetAllMod",
             //    rownumbers: true,
@@ -35,6 +35,13 @@
             //});
 
             //分页查询
+            var list = null;
+            var info = { "EmpName": "", "DepName": "","DutyName":"" }
+            $.post("/Employs/GetModPage",
+                { "pageNumber": 1, "pagesize": 10, "info": info, "count": 1 },
+                function (res) {
+                    list = res;
+            })
             $("#dataTable").datagrid({
                 url: "/Employs/GetModPage",
                 rownumbers: true,
@@ -44,7 +51,25 @@
                 toolbar: "#toolDiv",
                 height: $(window).height() * 0.90
             })
+            //增改窗体参数
+            $("#addDiv").window({
+                collapsible: false,
+                minimizable: false,
+                maximizable: false,
+                draggable: false,
+                resizable: false,
+                closed: true,
+                center: true,
+            });
+            //分页按钮集
+            $('#pp').pagination({
+                total: 15,//ViewBag.Count,
+                pageSize: 10,//ViewBag.pageSize,
+            });
+
+
         })
+        //表内数据
         function showWork(value) {
             return "<a href='javascript:showEdit(" + value + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + value + ")'>删除</a>&nbsp;&nbsp;<a href='#'>密码重置</a>";
         }
@@ -58,6 +83,40 @@
                 title: "添加职位",
                 closed: false,
             });
+        }
+        //弹出窗体方法
+        function closeWin() {
+            $("#addDiv").window("close");
+        }
+        //提交数据
+        function SaveData() {
+            //验证
+            if (!$("AddformData").form("validate")) {
+                return;
+            }
+            if ($("#btn").data["id"] == null) {
+
+                //添加
+                var info = { "DepName": $("#txt_DepName").val(), "DepMark": $("#txt_DepMark").val() }
+                $.post("/Department/Insert", info,
+                    function (res) {
+                        if (res = "True") {
+                            $("#dataTable").datagrid("reload");
+                            $("#addDiv").window("close");
+                        }
+                    })
+            }
+            //更新
+            if ($("#btn").data["id"] != null) {
+                var info = { "id": $("#btn").data["id"], "DepName": $("#txt_DepName").val(), "DepMark": $("#txt_DepMark").val() }
+                $.post("/Department/Update", info,
+                    function (res) {
+                        if (res = "True") {
+                            $("#dataTable").datagrid("reload");
+                            $("#addDiv").window("close");
+                        }
+                    })
+            }
         }
     </script>
 </head>
@@ -95,8 +154,8 @@
     </div>
     <div id="toolDiv">
         <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="showAdd()">添加</a>
-        <a href="#">离职</a>
-        <a href="#">退休</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" href="#">离职</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" href="#">退休</a>
     </div>
     <!--列表-->
     <table id="dataTable" class="tableList" style="width:95%;">
@@ -116,11 +175,55 @@
     </table>
     <!--分页按钮集-->
     <div id="pp" style="background:#efefef;border:1px solid #ccc;"></div>
-    <script>
-        $('#pp').pagination({
-            total: 15,//ViewBag.Count,
-            pageSize: 10,//ViewBag.pageSize,
-        });
-    </script>
+    <!--员工增改窗体-->
+    <div id="addDiv" class="easyui-window" style="padding:15px;">
+        <form id="AddformData">
+            <table class="tableEdit">
+                <tr>
+                    <th>所属部门：</th>
+                    <td>
+                        <select>
+                            <option>人事部</option>
+                            <option>财务部</option>
+                        </select>
+                    </td>
+                    <th>职位： </th>
+                    <td>
+                        <select>
+                            <option>经理</option>
+                            <option>主管</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>姓名：</th>
+                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                    <th>性别：</th>
+                    <td><input type="radio" checked="checked" name="sex" />男&nbsp;&nbsp;&nbsp;<input type="radio" name="sex" />女</td>
+                </tr>
+                <tr>
+                    <th>联系电话：</th>
+                    <td><input type="text" /></td>
+                    <th>登录账号：</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>家庭地址：</th>
+                    <td colspan="5"><input type="text" style="width: 90%;" /></td>
+                </tr>
+                <tr>
+                    <th>描述： </th>
+                    <td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+                </tr>
+            </table>
+        </form>
+        <div class="h40"></div>
+        <div class="div-bottom">
+            <div class='btn-group'>
+                <button id='doOk' type='button' class='btn btn-default' onclick="SaveData()"><i class='glyphicon glyphicon-saved'></i>  保存</button>
+                <button id='doClose' type='button' class='btn btn-default'onclick="closeWin()"><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

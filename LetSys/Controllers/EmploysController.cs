@@ -17,8 +17,6 @@ namespace LetSys.Controllers
         }
         public ActionResult GetModPage(int pageNumber, int pagesize, Mod_Employs info, out int count)
         {
-            pageNumber = 1;
-            pagesize = 5;
             count = 0;
             ViewBag.Count= count;
             ViewBag.PageSize=pagesize;
