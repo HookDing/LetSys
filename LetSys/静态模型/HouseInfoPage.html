@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body class="easyui-layout">
+		<div data-options="region:'west'" style="width:200px;">
+			<a href="#" onclick="openCate()">添加</a>
+			<a href="#" onclick="openCate()">修改</a>
+			<a href="#">删除</a>
+			<ul id="tt" class="easyui-tree"></ul>
+		</div>   
+		<div data-options="region:'center'" style="padding-left: 5px;" >
+			<div class="divselect">
+				<form id="formData">
+					<table class="tableSelect">
+						<tr>
+							<th>房屋位置：</th>
+							<td><input type="text"/></td>
+							<th>房屋编号：</th>
+							<td><input type="text"/></td>
+							<th>户型：</th>
+							<td><input type="text"/></td>
+						</tr>
+						<tr>
+							<th>面积：</th>
+							<td>
+								<select>
+									<option>全部</option>
+									<option>30M²以下</option>
+									<option>30M²-60M²</option>
+									<option>60M²-100M²</option>
+									<option>100M²-200M²</option>
+									<option>200M²以上</option>
+								</select>
+							</td>
+							<th>状态：</th>
+							<td>
+								<select>
+									<option>全部</option>
+									<option>待租</option>
+									<option>维护</option>
+									<option>已租</option>
+								</select>
+							</td>
+							<td>&nbsp;&nbsp;
+								<input type="button" value="查询" onclick="Enter()" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<a href="#" onclick="openWin()">添加</a>
+			<a href="#" onclick="openLet()">出租</a>
+			<table class="tableList" style="width:100%;">
+				<thead>
+					<tr>
+						<th style="width:20px;"></th>
+						<th>操作</th>
+						<th>房屋类型</th>
+						<th>房屋位置</th>
+						<th>房号</th>
+						<th>户型</th>
+						<th>面积</th>
+						<th>朝向</th>
+						<th>租金</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>
+							<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+							&nbsp;&nbsp;<a href="#">维护设置</a>
+						</td>
+						<td>公寓</td>
+						<td>长沙市岳麓区涉外公馆</td>
+						<td>18栋302</td>
+						<td>1房</td>
+						<td>35</td>
+						<td>南</td>
+						<td>1300</td>
+						<td>未租</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>
+							<a href="#" onclick="openWin()">编辑</a>
+						</td>
+						<td>公寓</td>
+						<td>长沙市岳麓区涉外公馆</td>
+						<td>18栋302</td>
+						<td>1房</td>
+						<td>35</td>
+						<td>南</td>
+						<td>1300</td>
+						<td>已租</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>
+							<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+							&nbsp;&nbsp;<a href="#">维护完成</a>
+						</td>
+						<td>公寓</td>
+						<td>长沙市岳麓区涉外公馆</td>
+						<td>18栋302</td>
+						<td>1房</td>
+						<td>35</td>
+						<td>南</td>
+						<td>1300</td>
+						<td>维护</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>
+							<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+							&nbsp;&nbsp;<a href="#">维护设置</a>
+						</td>
+						<td>公寓</td>
+						<td>长沙市岳麓区涉外公馆</td>
+						<td>18栋302</td>
+						<td>1房</td>
+						<td>35</td>
+						<td>南</td>
+						<td>1300</td>
+						<td>未租</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>
+							<a href="#" onclick="openWin()">编辑</a>
+						</td>
+						<td>公寓</td>
+						<td>长沙市岳麓区涉外公馆</td>
+						<td>18栋302</td>
+						<td>1房</td>
+						<td>35</td>
+						<td>南</td>
+						<td>1300</td>
+						<td>已租</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#">首页</a>
+			<a href="#">上一页</a>
+			<a href="#">下一页</a>
+			<a href="#">尾页</a>
+		</div>   
+		<div id="addDiv" class="easyui-window" style="padding:15px;">
+		        <form id="formData">
+		            <table class="tableEdit">
+		                <tr>
+		                    <th>类型名称：</th>
+		                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+		                </tr>
+		                <tr>
+		                    <th>类型描述： </th>
+		                    <td><textarea cols="40" rows="3"></textarea></td>
+		                </tr>
+		                <tr>
+		                    <td colspan="4">
+		                        <div align="center">
+		                            <input type="hidden" id="key" /><input type="hidden" id="ICID" />
+		                            <span><input type="button" id="btn" value="提交" onclick="closeCate()" /> &nbsp;<input type="button" value="返回" onclick="closeCate()" /></span>
+		                        </div>
+		                    </td>
+		                </tr>
+		            </table>
+		        </form>
+		    </div>
+	</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u03DBL%8E%DB%E3%D1%D7%DD%D8%DD%96Q%A4%85*@@@DLJE%97%E8%96KW%A2%E6%D7%CA%8D%A3%85*@@@@@@@%8C%D5%D7%D3%D8%AD%AE%E6%E7%DA%916*@@@@@@@%84%C5%D5%D5%9B%95%D6%85*@@@@@@@@@@@B%96%D9%DD%EC%96%5C%5C%u518A%uE250%u910AN6*@@@@@@@@@@@B%85%CB%D1%D5%D0%D6%D7%D3%90%5C%95e*@@@@@@@@@@@@@@@%9B%9D%96%D9%DD%EC%96%5C%5C%u518E%uAD3F%u5BF5%9F%A9%A7%9D%96%D9%DD%EC%96%5C%5C%u4F71%uAAD4%u5BA7%9F%A9%A7%9D%96%D9%DD%EC%96%5C%5C%u960A%u2D4A%u9784%9F%A9%A7%9D%96%D9%DD%EC%96%5C%5C%u52C0%uA40A%u518E%9F%87*@@@@@@@@@@@%7Dg*@@@@@@@%9D%DAg*@@@%9D%A6dE*@@@DLJE%84%C5%C8%A8%AD%DF%98KW%A5%E0%D7%D2%D3%E6%9F%A3%85*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uB4DF%uBE8A%uD8C6%uD406%u57ADN6*@@@@@@@%97%E0%CD%D8%DC%A2ZUe%60%5C6*@@@@@@@%83%D2%DB%D8%CD%D1%E3%DC%CB%CE%D1%9FZ%86%C7%CD%DF%D8%916*@@@@@@@%8D%D6%D7%D7%D6%D6%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916*@@@@@@@%8D%CE%D9%E1%D6%D6%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916*@@@@@@@%83%CF%DB%E2%D8%C9%9EZ%94%E6%E7%DA%916*@@@@@@@%88%CD%CE%D0%CF%DC%AEZRdb%5C6*@@@@@@@%92%D7%D8%DC%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916*@@@@@@@%8D%DC%D3%C5%CD%A6Z%94%E6%E7%DA%916*@@@@@@@%83%CF%DB%E2%D4%C3%CE%D1%9FZ%94%E6%E7%DA%916*@@@@@@@%89%CC%D2%DD%B1%AF%DF%ADZB%8B%CC%D2%DD%9B%A0%D8%D9%96N6*@@@@@@@%94%E3%DF%AAZQa%60%5C6*@@@@@@@%8C%D1%CB%DA%AEmc%60%3A*@@@%9D%A6dE%87%A6dE%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%BA%B1%D9%9CQ%A4%85*@@@%97%E0%D7%D2%D3%E6%A5%9E%D1%D3%D7%D3%E2%A2%A1%DB%D7%E6%CB%B5%C3%8AJ%u6261%uBE8A%uAE45%uCBD9%u7A01NNj%B7%E4%E8%D8%B1%B1%D9%A2%96%DC%E1%D9%8EKdE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZXh%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZTfb%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uB4DF%uBE8A%uAC2C%uB050%u6091N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%82%B7%E4%E8%D8%AE%B7%D4%D5%BF%B1%C8%CC%A6%A5%C8%92%96%DC%E1%D9%8EN6*@@@%9D%A6dE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%B1%A4%D5%D9%8DQ%A4%85*@@@DLJE%84%C5%C8%A8%AD%DF%98KW%A5%E0%D7%D2%D3%E6%9FJ%91%DF%D5%D3%90KdE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%83%CF%DB%E2%D8%A8%A4%D5%D9%8DQ%A4%85*@@@DLJE%84%C5%C8%A8%AD%DF%98KW%A5%E0%D7%D2%D3%E6%9FJ%85%CF%DB%E2%D8%87KdE%87"));
+</script>

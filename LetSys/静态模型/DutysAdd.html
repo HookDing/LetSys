@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<form id="formData">
+			<table class="tableEdit">
+				<tr>
+					<th>职位名称：</th>
+					<td><input type="text" class="text easyui-validatebox" data-options="required:true"/></td>
+				</tr>
+				<tr>
+					<th>职位描述： </th>
+					<td><textarea cols="40" rows="3"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div class="h40"></div>
+		<div class="div-bottom">
+			<div class='btn-group'> 
+				<button id='doOk'  type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+				<button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+			</div>
+		</div>
+	</body>
+</html>

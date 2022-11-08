@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<form id="formData">
+			<table class="tableEdit">
+				<tr>
+					<th>所属部门：</th>
+					<td>
+						<select>
+							<option>人事部</option>
+							<option>财务部</option>
+						</select>
+					</td>
+					<th>职位： </th>
+					<td>
+						<select>
+							<option>经理</option>
+							<option>主管</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>姓名：</th>
+					<td><input type="text" class="text easyui-validatebox" data-options="required:true"/></td>
+					<th>性别：</th>
+					<td><input type="radio" checked="checked" name="sex"/>男&nbsp;&nbsp;&nbsp;<input type="radio" name="sex"/>女</td>
+				</tr>
+				<tr>
+					<th>联系电话：</th>
+					<td><input type="text" /></td>
+					<th>登录账号：</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>家庭地址：</th>
+					<td colspan="5"><input type="text" style="width: 90%;" /></td>
+				</tr>
+				<tr>
+					<th>描述： </th>
+					<td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div class="h40"></div>
+		<div class="div-bottom">
+			<div class='btn-group'> 
+				<button id='doOk'  type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+				<button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+			</div>
+		</div>
+	</body>
+</html>

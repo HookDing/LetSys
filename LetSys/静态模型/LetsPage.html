@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="divselect">
+			<form id="formData">
+				<table class="tableSelect">
+					<tr>
+						<th>房屋类型：</th>
+						<td>
+							<select>
+								<option>全部</option>
+								<option>公寓</option>
+								<option>住宅</option>
+								<option>门面</option>
+							</select>
+						</td>
+						<th>房号：</th>
+						<td><input type="text"/></td>
+						<th>客户姓名：</th>
+						<td><input type="text"/></td>
+						<th>租房状态：</th>
+						<td>
+							<select>
+								<option>全部</option>
+								<option>已租</option>
+								<option>已退</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>业务员：</th>
+						<td><input type="text" /></td>
+						<th>租赁结束日期：</th>
+						<td colspan="3">
+							<input type="text" class="easyui-datebox" readonly="readonly"/> 至
+							<input type="text" class="easyui-datebox" readonly="readonly"/>
+							<input type="checkbox" />
+						</td>
+						<td>&nbsp;&nbsp;
+							<input type="button" value="查询" onclick="Enter()" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<a href="#" onclick="openWin()">添加费用</a>
+		<a href="#" onclick="openRepair()">报修</a>
+		<a href="#" onclick="openReturn()">退租</a>
+		<table class="tableList" style="width:100%;">
+			<thead>
+				<tr>
+					<th style="width:20px;"></th>
+					<th>操作</th>
+					<th>房屋类型</th>
+					<th>房号</th>
+					<th>面积</th>
+					<th>客户姓名</th>
+					<th>月租金</th>
+					<th>租赁开始时间</th>
+					<th>租赁结束时间</th>
+					<th>实际结束时间</th>
+					<th>当前到期房租日期</th>
+					<th>业务员</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>
+						<a href="#" onclick="openLet()">查看</a>
+					</td>
+					<td>公寓</td>
+					<td>19栋302</td>
+					<td>60M²</td>
+					<td>张三</td>
+					<td>1300</td>
+					<td>2020-01-01</td>
+					<td>2020-08-31</td>
+					<td></td>
+					<td>2020-05-31</td>
+					<td>李四</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>
+						<a href="#" onclick="openLet()">查看</a>
+					</td>
+					<td>公寓</td>
+					<td>19栋302</td>
+					<td>60M²</td>
+					<td>张三</td>
+					<td>1300</td>
+					<td>2020-01-01</td>
+					<td>2020-08-31</td>
+					<td>2020-04-31</td>
+					<td>2020-05-31</td>
+					<td>李四</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>
+						<a href="#" onclick="openLet()">查看</a>
+					</td>
+					<td>公寓</td>
+					<td>19栋302</td>
+					<td>60M²</td>
+					<td>张三</td>
+					<td>1300</td>
+					<td>2020-01-01</td>
+					<td>2020-08-31</td>
+					<td>2020-05-31</td>
+					<td>2020-05-31</td>
+					<td>李四</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>
+						<a href="#" onclick="openLet()">查看</a>
+					</td>
+					<td>公寓</td>
+					<td>19栋302</td>
+					<td>60M²</td>
+					<td>张三</td>
+					<td>1300</td>
+					<td>2020-01-01</td>
+					<td>2020-08-31</td>
+					<td></td>
+					<td>2020-05-31</td>
+					<td>李四</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>
+						<a href="#" onclick="openLet()">查看</a>
+					</td>
+					<td>公寓</td>
+					<td>19栋302</td>
+					<td>60M²</td>
+					<td>张三</td>
+					<td>1300</td>
+					<td>2020-01-01</td>
+					<td>2020-08-31</td>
+					<td></td>
+					<td>2020-05-31</td>
+					<td>李四</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#">首页</a>
+		<a href="#">上一页</a>
+		<a href="#">下一页</a>
+		<a href="#">尾页</a>
+	</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u027A%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZWg%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZTd%60%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uD1D4%u0C6D%uDD1A%uB050%u6091N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%82%B7%E4%E8%D8%B5%B1%DA%BA%A5%C8%92%96%DC%E1%D9%8E%2C*@@@%9D%A6dE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C0%B7%D5%D1%CA%DB%9AQ%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZWg%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZTd%60%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uB545%uB293%u9FCF%uB050%u6091N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%8C%B7%D5%D1%CA%DB%B3%A5%C8%92%96%DC%E1%D9%8E%2C*@@@%9D%A6dE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C0%B7%D9%E9%E7%E0%96Q%A4%85*@@@%97%E0%D7%D2%D3%E6%A5%9E%D1%D3%D7%D3%E2%A2%A1%DB%D7%E6%CB%B5%C3%8AJ%u6261%uBE8A%uEC4B%u09DF%u7A01NNn%B1%D9%E7%C5%B7%D9%E9%E7%E0%9C%96%DC%E1%D9%8EKdE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%BA%B1%D9%9CQ%A4%85*@@@%97%E0%D7%D2%D3%E6%A5%9E%D1%D3%D7%D3%E2%A2%A1%DB%D7%E6%CB%B5%C3%8AJ%u6261%uBE8A%uAE45%uCBD9%uC9C0%uB050%u6091NNj%B7%E4%E8%D8%B1%B1%D9%B8%A9%D9%D5%CA%D5%9A%96%DC%E1%D9%8EKdE%87"));
+	
+</script>
+

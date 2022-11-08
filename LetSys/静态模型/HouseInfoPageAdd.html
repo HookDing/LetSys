@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<form id="formData">
+			<table class="tableEdit">
+				<tr>
+					<th>所属房屋类型：</th>
+					<td colspan="3">
+						<select>
+							<option>公寓</option>
+							<option>住宅</option>
+							<option>门面</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>房屋地址：</th>
+					<td colspan="3"><input type="text" class="text easyui-validatebox" style="width: 90%;" data-options="required:true"/></td>
+				</tr>
+				<tr>
+					<th>房号：</th>
+					<td><input type="text" class="text easyui-validatebox" data-options="required:true"/></td>
+					<th>户型：</th>
+					<td><input type="text"></td>
+				</tr>
+				<tr>
+					<th>面积：</th>
+					<td><input type="text" /></td>
+					<th>朝向：</th>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<th>标准租金：</th>
+					<td><input type="text" /></td>
+					<th>每月网费：</th>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<th>电单价：</th>
+					<td><input type="text" /></td>
+					<th>水单价：</th>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<th>电初始金额：</th>
+					<td><input type="text" /></td>
+					<th>水初始金额：</th>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<th>描述： </th>
+					<td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div class="h40"></div>
+		<div class="div-bottom">
+			<div class='btn-group'> 
+				<button id='doOk'  type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+				<button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+			</div>
+		</div>
+	</body>
+</html>

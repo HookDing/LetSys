@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="divselect">
+				<form id="formData">
+					<table class="tableSelect">
+						<tr>
+							<th>房屋类型：</th>
+							<td>
+								<select>
+									<option>全部</option>
+									<option>公寓</option>
+									<option>住宅</option>
+									<option>商铺</option>
+								</select>
+							</td>
+							<th>房号：</th>
+							<td><input type="text"/></td>
+							<th>客户姓名：</th>
+							<td><input type="text"/></td>
+							
+						</tr>
+						<tr>
+							
+							<th>维修人：</th>
+							<td><input type="text"/></td>
+							<th>维修状态：</th>
+							<td>
+								<select>
+									<option>全部</option>
+									<option>维修中</option>
+									<option>已维修</option>
+								</select>
+							</td>
+							<td>&nbsp;&nbsp;
+								<input type="button" value="查询" onclick="Enter()" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<table class="tableList" style="width:100%;">
+				<thead>
+					<tr>
+						<th style="width:20px;"></th>
+						<th>操作</th>
+						<th>房号</th>
+						<th>客户姓名</th>
+						<th>报修时间</th>
+						<th>报修内容</th>
+						<th>维修人</th>
+						<th>完成时间</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>
+							<a href="#" onclick="openWin()">维修完成</a>&nbsp;&nbsp;
+							<a href="#" onclick="openPage()">查看</a>
+						</td>
+						<td>19栋302</td>
+						<td>张三</td>
+						<td>2020-01-01</td>
+						<td>客厅顶灯坏了</td>
+						<td>李四</td>
+						<td>2020-01-31</td>
+						<td>维修中</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>
+							<a href="#" onclick="openPage()">查看</a>
+						</td>
+						<td>19栋302</td>
+						<td>张三</td>
+						<td>2020-01-01</td>
+						<td>客厅顶灯坏了</td>
+						<td>李四</td>
+						<td>2020-01-31</td>
+						<td>已维修</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>
+							<a href="#" onclick="openPage()">查看</a>
+						</td>
+						<td>19栋302</td>
+						<td>张三</td>
+						<td>2020-01-01</td>
+						<td>客厅顶灯坏了</td>
+						<td>李四</td>
+						<td>2020-01-31</td>
+						<td>已维修</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>
+							<a href="#" onclick="openWin()">维修完成</a>&nbsp;&nbsp;
+							<a href="#" onclick="openPage()">查看</a>
+						</td>
+						<td>19栋302</td>
+						<td>张三</td>
+						<td>2020-01-01</td>
+						<td>客厅顶灯坏了</td>
+						<td>李四</td>
+						<td>2020-01-31</td>
+						<td>维修中</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>
+							<a href="#" onclick="openWin()">维修完成</a>&nbsp;&nbsp;
+							<a href="#" onclick="openPage()">查看</a>
+						</td>
+						<td>19栋302</td>
+						<td>张三</td>
+						<td>2020-01-01</td>
+						<td>客厅顶灯坏了</td>
+						<td>李四</td>
+						<td>2020-01-31</td>
+						<td>维修中</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#">首页</a>
+			<a href="#">上一页</a>
+			<a href="#">下一页</a>
+			<a href="#">尾页</a>
+	</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u01D4%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZWg%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZTd%60%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u5BAE%uBD9C%uE104%uCEE2%u5010N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%8C%B7%D5%D1%CA%DB%C5%B8%D9%A2%96%DC%E1%D9%8E%2C*@@@%9D%A6dE%87%87%14p%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%BE%B1%C8%CC%8DQ%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZWg%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZTd%60%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uB545%uB293%u9FCF%uB050%u6091N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%8C%B7%D5%D1%CA%DB%BB%B7%D4%D5%9D%96%DC%E1%D9%8E%2C*@@@%9D%A6dE%87"));
+</script>

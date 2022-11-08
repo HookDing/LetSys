@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="p" class="easyui-panel" title="用户信息" style="padding: 10px;">
+			<table class="tableEdit">
+				<tr>
+					<th>客户姓名：</th>
+					<td style="width:300px;">张三</td>
+					<th>性别：</th>
+					<td style="width:300px;">男</td>
+					<th>身份证号码：</th>
+					<td>张三</td>
+				</tr>
+				<tr>
+					<th>业务员：</th>
+					<td style="width:300px;" >张三</td>
+					<th>租赁开始日期：</th>
+					<td style="width:300px;" >2021-01-01</td>
+					<th>租赁结束日期：</th>
+					<td>2021-12-31</td>
+				</tr>
+			</table>
+		</div>
+		<p></p>
+		<div id="p" class="easyui-panel" title="房屋信息" style="padding: 10px;">
+			<table class="tableEdit">
+				<tr>
+					<th>房屋类别：</th>
+					<td style="width:300px;">公寓</td>
+					<th>地址：</th>
+					<td style="width:300px;">长沙市涉外国际公馆</td>
+					<th>房号：</th>
+					<td colspan="3">19栋302</td>
+				</tr>
+				<tr>
+					<th>户型：</th>
+					<td style="width:300px;">一房</td>
+					<th>面积(M²)：</th>
+					<td>35</td>
+					<th>朝向：</th>
+					<td colspan="3">南</td>
+				</tr>
+				<tr>
+					<th>标准租金：</th>
+					<td style="width:300px;">1300</td>
+					<th>每月网费：</th>
+					<td  colspan="5">30</td>
+				</tr>
+				<tr>
+					<th>电单价：</th>
+					<td style="width:300px;">0.76</td>
+					<th>电初始剩余金额：</th>
+					<td>23.5</td>
+					<th>水单价：</td>
+					<td>3.2</td>
+					<th>水初始剩余金额：</td>
+					<td>58.1</td>
+				</tr>
+				<tr>
+					<th>房间备注信息：</th>
+					<td colspan="7">描述房间相关信息</td>
+				</tr>
+				<tr>
+					<th>房租到期时间：</th>
+					<td style="width:300px;">2021-05-12</td>
+					<th>网费到期时间：</th>
+					<td>2021-05-12</td>
+					<th></td>
+					<td></td>
+					<th></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<p></p>
+		<div id="p" class="easyui-panel" title="缴费信息" style="padding: 10px;">
+			<table class="tableList" style="width:100%;">
+				<thead>
+					<tr>
+						<th style="width:30px;"></th>
+						<th>缴费科目</th>
+						<th>单价</th>
+						<th>数量</th>
+						<th>应缴金额</th>
+						<th>实缴金额</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>房租</td>
+						<td>1300</td>
+						<td>3</td>
+						<td>3900</td>
+						<td>3900</td>
+						<td>2020-01-01</td>
+						<td>2021-03-31</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>押金</td>
+						<td>2000</td>
+						<td></td>
+						<td>2000</td>
+						<td>1000</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>水费</td>
+						<td>3.2</td>
+						<td></td>
+						<td>100</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>其他费用</td>
+						<td></td>
+						<td></td>
+						<td>100</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				<font  style="color:blue;font-size: 20px;font-weight: bold;">应缴合计金额：￥4500.00</font> &nbsp;&nbsp;&nbsp;&nbsp;
+				<font  style="color:red;font-size: 20px;font-weight: bold;">实缴合计金额：￥4500.00</font> 
+			</p>
+		</div>
+		<p></p>
+		<div class="h40"></div>
+		<div class="div-bottom">
+			<div class='btn-group'> 
+				<button id='doOk'  type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+				<button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="divselect">
+			<form id="formData">
+				<table class="tableSelect">
+					<tr>
+						<th>员工姓名：</th>
+						<td><input type="text"/></td>
+						<th>所属部门：</th>
+						<td>
+							<select>
+								<option>全部</option>
+								<option>人事部</option>
+								<option>财务部</option>
+							</select>
+						</td>
+						<th>职位：</th>
+						<td>
+							<select>
+								<option>全部</option>
+								<option>经理</option>
+								<option>主管</option>
+							</select>
+						</td>
+						<td>&nbsp;&nbsp;
+							<input type="button" value="查询" onclick="Enter()" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<a href="#" onclick="openWin()">添加</a>
+		<a href="#">离职</a>
+		<a href="#">退休</a>
+		<table class="tableList" style="width:100%;">
+			<thead>
+				<tr>
+					<th style="width:20px;"></th>
+					<th>操作</th>
+					<th>员工账号</th>
+					<th>所属部门</th>
+					<th>职位</th>
+					<th>员工姓名</th>
+					<th>性别</th>
+					<th>联系电话</th>
+					<th>家庭地址</th>
+					<th>状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>
+						<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+						&nbsp;&nbsp;<a href="#">密码重置</a>
+					</td>
+					<td>00001</td>
+					<td>人事部</td>
+					<td>人事专员</td>
+					<td>张三</td>
+					<td>男</td>
+					<td>123456789</td>
+					<td>湖南省长沙市岳麓区</td>
+					<td>在职</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>
+						<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+						&nbsp;&nbsp;<a href="#">密码重置</a>
+					</td>
+					<td>00002</td>
+					<td>人事部</td>
+					<td>人事专员</td>
+					<td>张三</td>
+					<td>男</td>
+					<td>123456789</td>
+					<td>湖南省长沙市岳麓区</td>
+					<td>离职</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>
+						<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+						&nbsp;&nbsp;<a href="#">密码重置</a>
+					</td>
+					<td>00003</td>
+					<td>人事部</td>
+					<td>人事专员</td>
+					<td>张三</td>
+					<td>男</td>
+					<td>123456789</td>
+					<td>湖南省长沙市岳麓区</td>
+					<td>退休</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>
+						<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+						&nbsp;&nbsp;<a href="#">密码重置</a>
+					</td>
+					<td>00004</td>
+					<td>人事部</td>
+					<td>人事专员</td>
+					<td>张三</td>
+					<td>男</td>
+					<td>123456789</td>
+					<td>湖南省长沙市岳麓区</td>
+					<td>在职</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>
+						<a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+						&nbsp;&nbsp;<a href="#">密码重置</a>
+					</td>
+					<td>00005</td>
+					<td>人事部</td>
+					<td>人事专员</td>
+					<td>张三</td>
+					<td>男</td>
+					<td>123456789</td>
+					<td>湖南省长沙市岳麓区</td>
+					<td>在职</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#">首页</a>
+		<a href="#">上一页</a>
+		<a href="#">下一页</a>
+		<a href="#">尾页</a>
+	</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u011E%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85*@@@DR%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85*@@@@@@@%97%E0%CD%D8%DC%A2ZWg%60%5C6*@@@@@@@%88%CD%CE%D0%CF%DC%AEZSc%60%5C6*@@@@@@@%94%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uA6F8%uB23D%uADC6%uB050%u6091N6*@@@@@@@%95%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916*@@@@@@@%83%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%7F%B2%DD%DC%DB%E8%EC%B4%A5%C8%92%96%DC%E1%D9%8EN6*@@@%9D%A6dE%87"));
+</script>

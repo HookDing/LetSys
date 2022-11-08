@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<a href="#" onclick="openWin()">添加</a>
+		<table class="tableList" style="width:90%;">
+			<thead>
+				<tr>
+					<th  style="width:30px;"></th>
+					<th>操作</th>
+					<th>部门名称</th>
+					<th>部门描述</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td><a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+					<td>人事部</td>
+					<td>人事部</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+					<td>人事部</td>
+					<td>人事部</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+					<td>人事部</td>
+					<td>人事部</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td><a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+					<td>人事部</td>
+					<td>人事部</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td><a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+					<td>人事部</td>
+					<td>人事部</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div id="addDiv" class="easyui-window" style="padding:15px;">
+			<form id="formData">
+				<table class="tableEdit">
+					<tr>
+						<th>部门名称：</th>
+						<td><input type="text" class="text easyui-validatebox" data-options="required:true" id="ICName" /></td>
+					</tr>
+					<tr>
+						<th>部门描述： </th>
+						<td colspan="5"><textarea cols="40" rows="3" id="ICDesc"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div align="center">
+								<input type="hidden" id="key" /><input type="hidden" id="ICID" />
+								<span><input type="button" id="btn" value="提交" onclick="closeWin()" /> &nbsp;<input type="button" value="返回" onclick="closeWin()" /></span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u01C8L%8E%DB%E3%D1%D7%DD%D8%DD%96Q%A4%85%13%12%29O%5E%u8BED%u0B2C%uD0F3%uE26D%uF021%uB133%uCC91%uC9EA%u4F5D%13%12-LJE%84%C5%C8%A8%AD%DF%98KW%A5%E0%D7%D2%D3%E6%9F%A3%85%13%12%12%7D%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uE388%u26D0%uE5C9%uB050%u6091N6%13%12%12%80%E0%CD%D8%DC%A2ZUe%60%5C6%13%12%12l%D2%DB%D8%CD%D1%E3%DC%CB%CE%D1%9FZ%86%C7%CD%DF%D8%916%13%12%12v%D6%D7%D7%D6%D6%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916%13%12%12v%CE%D9%E1%D6%D6%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916%13%12%12l%CF%DB%E2%D8%C9%9EZ%94%E6%E7%DA%916%13%12%12q%CD%CE%D0%CF%DC%AEZRdb%5C6%13%12%12%7B%D7%D8%DC%E3%DB%C3%CE%D1%9FZ%86%C7%CD%DF%D8%916%13%12%12v%DC%D3%C5%CD%A6Z%94%E6%E7%DA%916%13%12%12l%CF%DB%E2%D4%C3%CE%D1%9FZ%94%E6%E7%DA%916%13%12%12r%CC%D2%DD%B1%AF%DF%ADZB%8B%CC%D2%DD%9B%A0%D8%D9%96N6%13%12%12%7D%E3%DF%AAZQa%60%5C6%13%12%12u%D1%CB%DA%AEmc%60%3A%13%12%86%A6dE%13%86%A6dE%13%13%13o%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85%13%12-LOJ%84%C5%C8%A8%AD%DF%9DPW%A5%E0%D7%D2%D3%E6%9FO%96%DF%D5%D3%95PdE%13%86%87%13%13%13o%DB%E3%D1%D7%DD%D8%DD%8E%83%CF%DB%E2%D8%BC%C0%D7%96Q%A4%85%13%12-LOJ%84%C5%C8%A8%AD%DF%9DPW%A5%E0%D7%D2%D3%E6%9FO%8A%CF%DB%E2%D8%8CPdE%13%86"));
+</script>

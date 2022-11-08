@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="divselect">
+					<form id="formData">
+						<table class="tableSelect">
+							<tr>
+								<th>缴费编号：</th>
+								<td><input type="text"/></td>
+								<th>房号：</th>
+								<td><input type="text"/></td>
+								<th>客户姓名：</th>
+								<td><input type="text"/></td>
+								
+							</tr>
+							<tr>
+								<th>发起人：</th>
+								<td><input type="text"/></td>
+								<th>收费科目：</th>
+								<td>
+									<select>
+										<option>全部</option>
+										<option>房租</option>
+										<option>押金</option>
+										<option>网费</option>
+									</select>
+								</td>
+								<th>缴费状态：</th>
+								<td>
+									<select>
+										<option>全部</option>
+										<option>待缴费</option>
+										<option>缴费中</option>
+										<option>已缴费</option>
+									</select>
+								</td>
+								<td>&nbsp;&nbsp;
+									<input type="button" value="查询" onclick="Enter()" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div id="jfDiv" class="divselect">
+				        <form id="PayForm">
+				            <table id="StuInfo" class="ManualTable" style="width:100%">
+				                <thead>
+				                    <tr style="font-size: 14px"><th scope='col' class='rounded-company'>收费科目</th>
+									<th scope='col' class='rounded-company'>房号</th>
+									<th scope='col' class='rounded-company'>客户姓名</th>
+									<th scope='col' class='rounded-company'>应缴总金额</th>
+									<th scope='col' class='rounded-company'>应缴剩余金额</th>
+									<th scope='col' class='rounded-company'>实缴金额</th>
+									<th scope='col' class='rounded-company'>单价</th>
+									<th scope='col' class='rounded-company'>数量</th>
+									<th scope='col' class='rounded-company' style='width:220px;'>开始时间</th>
+									<th scope='col' class='rounded-company'>结束时间</th>
+									<th scope='col' class='rounded-company'>操作</th>
+								</tr>
+				                </thead>
+				                <tbody>
+									<tr>
+										<td>房租</td>
+										<td>19栋302</td>
+										<td>张三</td>
+										<td>3000</td>
+										<td>3000</td>
+										<td><input type="text"/></td>
+										<td>1000</td>
+										<td>3</td>
+										<td>2021-01-01</td>
+										<td>2021-03-31</td>
+										<td><a href="#">删除</a></td>
+									</tr>
+									<tr>
+										<td>水费</td>
+										<td>19栋302</td>
+										<td>张三</td>
+										<td>100</td>
+										<td>50</td>
+										<td><input type="text"/></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><a href="#">删除</a></td>
+									</tr>
+								</tbody>
+				                <tfoot>
+				                    <tr>
+				                        <td colspan='10' class='rounded-foot-left' style='text-align:left'>
+				                            <em>应缴剩余总金额:</em><span id='SumSpan1' style='margin-left:30px;color:red;font-weight:bold;font-size:16px;'>1000</span>
+				                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				                            <em>实缴总金额:</em><span id='SumSpan2' style='margin-left:30px;color:red;font-weight:bold;font-size:16px;'>1000</span>
+				                        </td>
+				                        <td class='rounded-foot-right'>&nbsp;</td>
+				                    </tr>
+				                </tfoot>
+				            </table>
+				        </form>
+				        <div id="bt_a" style="width:100%;text-align: center;">
+				            <input type="button" value="保存" style="width:100px" />
+				        </div>
+				    </div>
+				<table class="tableList" style="width:100%;">
+					<thead>
+						<tr>
+							<th style="width:20px;"></th>
+							<th>勾选</th>
+							<th>缴费编号</th>
+							<th>房号</th>
+							<th>客户姓名</th>
+							<th>收费科目</th>
+							<th>单价</th>
+							<th>数量</th>
+							<th>应缴金额</th>
+							<th>实缴金额</th>
+							<th>开始时间</th>
+							<th>结束时间</th>
+							<th>发起人</th>
+							<th>状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><input type="checkbox"/></td>
+							<td>CW202001020001</td>
+							<td>19栋302</td>
+							<td>张三</td>
+							<td>房租</td>
+							<td>1500</td>
+							<td>3</td>
+							<td>4500</td>
+							<td>0</td>
+							<td>2020-01-01</td>
+							<td>2020-01-31</td>
+							<td>李四</td>
+							<td>未缴费</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><input type="checkbox"/></td>
+							<td>CW202001020001</td>
+							<td>19栋302</td>
+							<td>张三</td>
+							<td>房租</td>
+							<td>1500</td>
+							<td>3</td>
+							<td>4500</td>
+							<td>1000</td>
+							<td>2020-01-01</td>
+							<td>2020-01-31</td>
+							<td>李四</td>
+							<td>缴费中</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td></td>
+							<td>CW202001020001</td>
+							<td>19栋302</td>
+							<td>张三</td>
+							<td>房租</td>
+							<td>1500</td>
+							<td>3</td>
+							<td>4500</td>
+							<td>4500</td>
+							<td>2020-01-01</td>
+							<td>2020-01-31</td>
+							<td>李四</td>
+							<td>已缴费</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td><input type="checkbox"/></td>
+							<td>CW202001020001</td>
+							<td>19栋302</td>
+							<td>张三</td>
+							<td>房租</td>
+							<td>1500</td>
+							<td>3</td>
+							<td>4500</td>
+							<td>4500</td>
+							<td>2020-01-01</td>
+							<td>2020-01-31</td>
+							<td>李四</td>
+							<td>已缴费</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td><input type="checkbox"/></td>
+							<td>CW202001020001</td>
+							<td>19栋302</td>
+							<td>张三</td>
+							<td>房租</td>
+							<td>1500</td>
+							<td>3</td>
+							<td>4500</td>
+							<td>0</td>
+							<td>2020-01-01</td>
+							<td>2020-01-31</td>
+							<td>李四</td>
+							<td>未缴费</td>
+						</tr>
+					</tbody>
+				</table>
+				<a href="#">首页</a>
+				<a href="#">上一页</a>
+				<a href="#">下一页</a>
+				<a href="#">尾页</a>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+		<script src="JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+		<link href="JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+		<link href="JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+		<link href="css/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+		<script src="css/bootstrapall/js/bootstrap.js"></script>
+		<link href='css/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+		<link href="CSS/form.css" rel="stylesheet" />
+	</head>
+	<body>
+		<font style="color: red;">
+			1.在房屋租赁界面：根据选择的缴费科目，获取房屋信息表的关联字段，如果有关联字段，则显示单价为关联字段的信息，如果是否有起始日期设置为true，则数量和起始日期可编辑，应缴金额根据数量和单据进行计算并显示，否则填写应缴金额
+			<br>
+			2.在已出租的房屋界面，添加缴费信息的时候，应该从租赁表中获取关联字段来获取价格信息
+		</font>
+		<form id="formData">
+			<table class="tableEdit">
+				<tr>
+					<th>收费科目：</th>
+					<td>
+						<select>
+							<option>房租</option>
+							<option>押金</option>
+							<option>水费</option>
+							<option>电费</option>
+						</select>
+					</td>
+					<th>单价：</th>
+					<td><input type="text" disabled="disabled"/></td>
+				</tr>
+				<tr>
+					<th>数量：</th>
+					<td><input type="text" disabled="disabled"/></td>
+					<th>应缴金额：</th>
+					<td><input type="text"/></td>
+				</tr>
+				<tr>
+					<th>开始日期：</th>
+					<td><input type="text" class="easyui-datebox" disabled="disabled"/></td>
+					<th>结束日期：</th>
+					<td><input type="text" class="easyui-datebox" disabled="disabled"/></td>
+				</tr>
+				<tr>
+				</tr>
+				<tr>
+					<th>描述： </th>
+					<td colspan="3"><textarea cols="70" rows="3"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div class="h40"></div>
+		<div class="div-bottom">
+			<div class='btn-group'> 
+				<button id='doOk'  type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+				<button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+			</div>
+		</div>
+	</body>
+</html>
