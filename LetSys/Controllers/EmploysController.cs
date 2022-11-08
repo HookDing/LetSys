@@ -15,11 +15,14 @@ namespace LetSys.Controllers
         {
             return View();
         }
-        public ActionResult GetModPage(int index, int pagesize, Mod_Employs info)
+        public ActionResult GetModPage(int pageNumber, int pagesize, Mod_Employs info, out int count)
         {
-            index = 1;
+            pageNumber = 1;
             pagesize = 5;
-            return Json(Bll_Employs.GetModPage(index, pagesize, info, out int count));
+            count = 0;
+            ViewBag.Count= count;
+            ViewBag.PageSize=pagesize;
+            return Json(Bll_Employs.GetModPage(pageNumber, pagesize, info,out count));
         }
         public ActionResult GetAllMod()
         {
