@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DutysController.cs" />
     <Compile Include="Controllers\EmploysController.cs" />
@@ -3485,6 +3486,7 @@
     <Content Include="Views\Dutys\Index.cshtml" />
     <Content Include="Views\Employs\Index.cshtml" />
     <Content Include="Views\Jurisdictions\Index.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

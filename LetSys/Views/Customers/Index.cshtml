@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+    <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+    <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
+    <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <link href="/Content/CSS/form.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="divselect">
+        <form id="formData">
+            <table class="tableSelect">
+                <tr>
+                    <th>客户姓名：</th>
+                    <td><input type="text" /></td>
+                    <td>
+                        &nbsp;&nbsp;
+                        <input type="button" value="查询" onclick="Enter()" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <a href="#" onclick="openWin()">添加</a>
+    <table class="tableList" style="width:100%;">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th>操作</th>
+                <th>客户姓名</th>
+                <th>性别</th>
+                <th>联系方式</th>
+                <th>身份证</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>
+                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                </td>
+                <td>张三</td>
+                <td>男</td>
+                <td>123456789</td>
+                <td>123456789012345678</td>
+                <td>未租</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                    &nbsp;&nbsp;<a href="#" onclick="openHouse()">租房信息</a>
+                </td>
+                <td>张三</td>
+                <td>男</td>
+                <td>123456789</td>
+                <td>123456789012345678</td>
+                <td>已租</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>
+                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                    &nbsp;&nbsp;<a href="#" onclick="openHouse()">租房信息</a>
+                </td>
+                <td>张三</td>
+                <td>男</td>
+                <td>123456789</td>
+                <td>123456789012345678</td>
+                <td>退租</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>
+                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                </td>
+                <td>张三</td>
+                <td>男</td>
+                <td>123456789</td>
+                <td>123456789012345678</td>
+                <td>未租</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>
+                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                </td>
+                <td>张三</td>
+                <td>男</td>
+                <td>123456789</td>
+                <td>123456789012345678</td>
+                <td>未租</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="#">首页</a>
+    <a href="#">上一页</a>
+    <a href="#">下一页</a>
+    <a href="#">尾页</a>
+</body>
+</html>
+<script type="text/javascript">
+	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u01A8%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85%13%12-R%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85%13%12%12%80%E0%CD%D8%DC%A2ZWg%60%5C6%13%12%12q%CD%CE%D0%CF%DC%AEZSc%60%5C6%13%12%12%7D%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uAE42%uBDD9%uB218%uB050%u6091N6%13%12%12%7E%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916%13%12%12l%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%7D%B8%E8%E7%E3%DC%D2%D7%E5%B4%A5%C8%92%96%DC%E1%D9%8EN6%13%12%86%A6dE%13%86%87%13%13%13o%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%B6%B7%E4%E8%D8%8DQ%A4%85%13%12-R%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85%13%12%12%80%E0%CD%D8%DC%A2ZWg%60%5C6%13%12%12q%CD%CE%D0%CF%DC%AEZTd%60%5C6%13%12%12%7D%DD%DD%E0%D1%9FZB%u7A01%uDC1E%uB220%uB050%u6091N6%13%12%12%7E%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916%13%12%12l%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%7D%B8%E8%E7%E3%DC%D2%D7%E5%BB%B7%E4%E8%D8%93%96%DC%E1%D9%8EN6%13%12%86%A6dE%13%86"));
+</script>
+
