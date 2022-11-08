@@ -44,33 +44,18 @@ namespace Bll
                     }).ToList()[0];
             }
         }
-        public static bool Insert(string CusName, string CusSex, string CusCard, string CusTel)
+        public static bool Insert(Customers info)
         {
             using (LetDB db = new LetDB())
             {
-                Customers info = new Customers
-                {
-                    CusName = CusName,
-                    CusSex = CusSex,
-                    CusCard = CusCard,
-                    CusTel = CusTel
-                };
                 db.Customers.Add(info);
                 return db.SaveChanges() > 0;
             }
         }
-        public static bool Update(int CusID, string CusName, string CusSex, string CusCard, string CusTel)
+        public static bool Update(Customers info)
         {
             using (LetDB db = new LetDB())
             {
-                Customers info = new Customers
-                {
-                    CusID = CusID,
-                    CusName = CusName,
-                    CusSex = CusSex,
-                    CusCard = CusCard,
-                    CusTel = CusTel
-                };
                 db.Entry(info).State = System.Data.Entity.EntityState.Modified;
                 return db.SaveChanges() > 0;
             }

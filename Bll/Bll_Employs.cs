@@ -40,28 +40,28 @@ namespace Bll
         /// 查询并返回所有数据
         /// </summary>
         /// <returns></returns>
-        public static List<Mod_Employs> GetAllMod()
-        {
-            using (LetDB db = new LetDB())
-            {
-                return db.Employs.Select(n => new Mod_Employs
-                {
-                    EmpAdd = n.EmpAdd,
-                    EmpID = n.EmpID,
-                    EmpMark = n.EmpMark,
-                    EmpName = n.EmpName,
-                    EmpSex = n.EmpSex,
-                    EmpState = n.EmpState,
-                    EmpTel = n.EmpTel,
-                    DepID = n.DepID,
-                    DepName = n.Departments.DepName,
-                    DutyID = n.DutyID,
-                    DutyName = n.Dutys.DutyName,
-                    LoginName = n.LoginName,
-                    LoginPWD = n.LoginPWD,
-                }).ToList();
-            }
-        }
+        //public static List<Mod_Employs> GetAllMod()
+        //{
+        //    using (LetDB db = new LetDB())
+        //    {
+        //        return db.Employs.Select(n => new Mod_Employs
+        //        {
+        //            EmpAdd = n.EmpAdd,
+        //            EmpID = n.EmpID,
+        //            EmpMark = n.EmpMark,
+        //            EmpName = n.EmpName,
+        //            EmpSex = n.EmpSex,
+        //            EmpState = n.EmpState,
+        //            EmpTel = n.EmpTel,
+        //            DepID = n.DepID,
+        //            DepName = n.Departments.DepName,
+        //            DutyID = n.DutyID,
+        //            DutyName = n.Dutys.DutyName,
+        //            LoginName = n.LoginName,
+        //            LoginPWD = n.LoginPWD,
+        //        }).ToList();
+        //    }
+        //}
         ///// <summary>
         ///// 根据ID查询并返回一条数据
         ///// </summary>
@@ -136,10 +136,6 @@ namespace Bll
                 return list;
             }
         }
-
-
-
-
         /// <summary>
         /// 添加
         /// </summary>
@@ -152,7 +148,6 @@ namespace Bll
                 db.Employs.Add(new Employs
                 {
                     EmpAdd = info.EmpAdd,
-                    EmpID = info.EmpID,
                     EmpMark = info.EmpMark,
                     EmpName = info.EmpName,
                     EmpSex = info.EmpSex,
@@ -163,6 +158,37 @@ namespace Bll
                     LoginName = info.LoginName,
                     LoginPWD = info.LoginPWD,
                 });
+                return db.SaveChanges() > 0;
+            }
+        }
+        public static bool Update(Mod_Employs info)
+        {
+            using (LetDB db = new LetDB())
+            {
+                db.Entry(new Employs
+                {
+                    EmpAdd = info.EmpAdd,
+                    EmpID = info.EmpID,
+                    EmpMark = info.EmpMark,
+                    EmpName = info.EmpName,
+                    EmpSex = info.EmpSex,
+                    EmpState = info.EmpState,
+                    EmpTel = info.EmpTel,
+                    DepID = info.DepID,
+                    DutyID = info.DutyID,
+                    LoginName = info.LoginName,
+                    LoginPWD = info.LoginPWD,
+                }).State = System.Data.Entity.EntityState.Modified;
+                return db.SaveChanges() > 0;
+            }
+        }
+        public static bool Delete(int DepID)
+        {
+            using (LetDB db = new LetDB())
+            {
+                var info = db.Employs.Find(DepID);
+                info.EmpState = 0;
+                db.Entry(info).State = System.Data.Entity.EntityState.Modified;
                 return db.SaveChanges() > 0;
             }
         }
