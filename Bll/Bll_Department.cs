@@ -18,13 +18,15 @@ namespace Bll
         {
             using (LetDB db = new LetDB())
             {
-                return db.Departments.Where(n => n.DepState == true).Select(n => new Mod_Departments
-                {
-                    DepID = n.DepID,
-                    DepName = n.DepName,
-                    DepMark = n.DepMark,
-                    DepState = n.DepState
-                }).ToList();
+                return db.Departments
+                    .Where(n => n.DepState == true)
+                    .Select(n => new Mod_Departments
+                    {
+                        DepID = n.DepID,
+                        DepName = n.DepName,
+                        DepMark = n.DepMark,
+                        DepState = n.DepState
+                    }).ToList();
             }
         }
         /// <summary>
@@ -51,57 +53,29 @@ namespace Bll
         /// <summary>
         /// 添加数据
         /// </summary>
-        /// <param name="DepName"></param>
-        /// <param name="DepMark"></param>
         /// <returns>成功为true，失败为false</returns>
-        public static bool Insert(string DepName, string DepMark)
+        public static bool Insert(Departments info)
         {
             using (LetDB db = new LetDB())
             {
-                Departments info = new Departments()
-                {
-                    DepName = DepName,
-                    DepMark = DepMark,
-                    DepState = true,
-                };
+                info.DepState = true;
                 db.Departments.Add(info);
-                if (db.SaveChanges() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return db.SaveChanges() > 0;
             }
         }
         /// <summary>
         /// 修改数据
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="DepName"></param>
-        /// <param name="DepMark"></param>
         /// <returns>成功为true，失败为false</returns>
-        public static bool Update(int id, string DepName, string DepMark)
+        public static bool Update(Departments info)
         {
+            Departments data = new Departments { DepID = info.DepID };
             using (LetDB db = new LetDB())
             {
-                Departments info = new Departments()
-                {
-                    DepID = id,
-                    DepName = DepName,
-                    DepMark = DepMark,
-                    DepState = true,
-                };
-                db.Entry(info).State = System.Data.Entity.EntityState.Modified;
-                if (db.SaveChanges() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                db.Departments.Attach(data);
+                data.DepName = info.DepName;
+                data.DepMark = info.DepMark;
+                return db.SaveChanges() > 0;
             }
         }
         /// <summary>
@@ -111,11 +85,11 @@ namespace Bll
         /// <returns>成功为true，失败为false</returns>
         public static bool Delete(int DepID)
         {
+            Departments data=new Departments { DepID = DepID };
             using (LetDB db = new LetDB())
             {
-                Departments info = db.Departments.Find(DepID);
-                info.DepState = false;
-                db.Entry(info).State = System.Data.Entity.EntityState.Modified;
+                db.Departments.Attach(data);
+                data.DepState = false;
                 return db.SaveChanges() > 0;
             }
         }

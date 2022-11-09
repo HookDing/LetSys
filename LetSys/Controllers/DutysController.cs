@@ -19,6 +19,16 @@ namespace LetSys.Controllers
         {
             return Json(Bll_Dutys.GetAllMod());
         }
+        /// <summary>
+        /// 列表数据(包含“全部”项)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetAllList()
+        {
+            var list = Bll_Dutys.GetAllMod();
+            list.Insert(0, new Mod.Mod_Dutys { DutyID = -1, DutyName = "全部" });
+            return Json(list);
+        }
         public ActionResult GetMod(int id)
         {
             return Json(Bll_Dutys.GetMod(id));
