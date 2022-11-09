@@ -19,36 +19,31 @@
     <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
     <link href="/Content/CSS/form.css" rel="stylesheet" />
     <script>
+        //加载数据
         $(function () {
-
-            //设置datatable的属性
-
-            // 查询全部，不分页
-            //$("#dataTable").datagrid({
-            //    url: "/Employs/GetAllMod",
-            //    rownumbers: true,
-            //    singleSelect: true,
-            //    striped: true,
-            //    fitColumns: true,
-            //    toolbar: "#toolDiv",
-            //    height: $(window).height() * 0.90
-            //});
-
-            //分页查询
-            var list = null;
-            var info = { "EmpName": "", "DepName": "","DutyName":"" }
-            $.post("/Employs/GetModPage",
-                { "pageNumber": 1, "pagesize": 10, "info": info, "count": 1 },
-                function (res) {
-                    list = res;
-            })
+            //绑定下拉列表
+            $("#deptCob,#add_deptCob").combobox({
+                url: '/Department/GetAllList',
+                valueField: 'DepID',
+                textField: 'DepName',
+                value: 0,
+            });
+            $("#dutyCob,#add_dutyCob").combobox({
+                url: '/Dutys/GetAllList',
+                valueField: 'DutyID',
+                textField: 'DutyName',
+                value: 0,
+            });
+            //设置datagrid的属性
             $("#dataTable").datagrid({
-                url: "/Employs/GetModPage",
+                url: "/Employs/GetPageMod",
                 rownumbers: true,
                 singleSelect: true,
                 striped: true,
                 fitColumns: true,
                 toolbar: "#toolDiv",
+                pagination: true,
+                pageSize: 10,
                 height: $(window).height() * 0.90
             })
             //增改窗体参数
@@ -61,30 +56,114 @@
                 closed: true,
                 center: true,
             });
-            //分页按钮集
-            $('#pp').pagination({
-                total: 15,//ViewBag.Count,
-                pageSize: 10,//ViewBag.pageSize,
+        })
+        //根据条件查询
+        function Search() {
+            var info = new Object();
+            info.EmpName = $("#txt_EmpName").val();
+            info.DepID = $("#deptCob").combobox("getValue");
+            info.DutyID = $("#dutyCob").combobox("getValue");
+            $("#dataTable").datagrid({
+                queryParams: {
+                    info: info
+                }
+            });
+        }
+        //自定义datagrid中的编辑按钮
+        function showWork(value) {
+            return "<a href='javascript:showEdit(" + value + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + value + ")'>删除</a>&nbsp;&nbsp;<a href='javascript:initPwd(" + value + ")'>密码重置</a>";
+        }
+        //修改员工状态
+        function editState(state) {
+            var data = $("#dataTable").datagrid("getSelected");
+            if (data == null) {
+                alert("请选择需要操作的数据！")
+                return
+            }
+            if (!confirm("确定要修改当前数据吗？")) {
+                return
+            }
+            var obj = new Object();
+            obj.EmpID = data.EmpID;
+            obj.EmpState = state;
+            $.post("/Employs/EditState", obj, function (res) {
+                if (res = "True") {
+                    $("#dataTable").datagrid("reload")
+                    alert("操作成功！");
+                }
             });
 
-
-        })
-        //表内数据
-        function showWork(value) {
-            return "<a href='javascript:showEdit(" + value + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + value + ")'>删除</a>&nbsp;&nbsp;<a href='#'>密码重置</a>";
         }
-
-        //添加窗体
+        //密码重置
+        function initPwd(id) {
+            if (confirm("确定重置密码？")) {
+                $.post("/Employs/InitPwd",
+                    { "EmpID": id },
+                    function (res) {
+                        if (res = "True") {
+                            $("#dataTable").datagrid("reload");
+                            alert("密码重置成功！");
+                        }
+                    }
+                )
+            }
+        }
+        //删除数据
+        function deleteData(id) {
+            if (confirm("确定删除？")) {
+                $.post("/Employs/Delete",
+                    { "EmpID": id },
+                    function (res) {
+                        if (res = "True") {
+                            $("#dataTable").datagrid("reload");
+                        }
+                    }
+                )
+            }
+        }
+        //显示添加窗体
         function showAdd() {
             $("#btn").data["id"] = null;
-            $("#txt_DutyName").val("");
-            $("#txt_DutyMark").val("");
+            //清空数据
+            $("#txt_EmpAdd").val("");
+            $("#txt_EmpMark").val("");
+            $("#add_txt_EmpName").val("");
+            $("#txt_EmpTel").val("");
+            $("#add_deptCob").combobox({ value: 0 });
+            $("#add_dutyCob").combobox({ value: 0 });
+            $("#txt_LoginName").val("");
+            //单选
+            $("input[name=sex]:first").prop("checked", "true");
+            $("input[name=sex]:last").prop("checked", false)
             $("#addDiv").window({
                 title: "添加职位",
                 closed: false,
             });
         }
-        //弹出窗体方法
+        //显示编辑窗体
+        function showEdit(id) {
+            $("#btn").data["id"] = id;
+            $.post("/Employs/GetMod",
+                { "EmpID": id },
+                function (res) {
+                    //加载数据
+                    $("#txt_EmpAdd").val(res.EmpAdd);
+                    $("#txt_EmpMark").val(res.EmpMark);
+                    $("#add_txt_EmpName").val(res.EmpName);
+                    $("#txt_EmpTel").val(res.EmpTel);
+                    $("#txt_LoginName").val(res.LoginName);
+                    $("#txt_EmpState").val(res.EmpState);
+                    $("#add_deptCob").combobox({ value: res.DepID });
+                    $("#add_dutyCob").combobox({ value: res.DutyID });
+                    if (res.EmpSex == "男") { $("input[name=sex]:first").prop("checked", "true"); $("input[name=sex]:last").prop("checked", false); }
+                    if (res.EmpSex == "女") { $("input[name=sex]:first").prop("checked", false); $("input[name=sex]:last").prop("checked", "true"); }
+                });
+            $("#addDiv").window({
+                title: "添加职位",
+                closed: false,
+            });
+        }
+        //关闭窗体
         function closeWin() {
             $("#addDiv").window("close");
         }
@@ -94,28 +173,49 @@
             if (!$("AddformData").form("validate")) {
                 return;
             }
+            //添加
             if ($("#btn").data["id"] == null) {
-
-                //添加
-                var info = { "DepName": $("#txt_DepName").val(), "DepMark": $("#txt_DepMark").val() }
-                $.post("/Department/Insert", info,
+                var obj = new Object();
+                obj.EmpAdd = $("#txt_EmpAdd").val();
+                obj.EmpMark = $("#txt_EmpMark").val();
+                obj.EmpName = $("#add_txt_EmpName").val();
+                obj.EmpSex = $("input[name='sex']:checked").val();
+                obj.EmpTel = $("#txt_EmpTel").val();
+                obj.DepID = $("#add_deptCob").combobox("getValue");
+                obj.DutyID = $("#add_dutyCob").combobox("getValue");
+                obj.LoginName = $("#txt_LoginName").val();
+                $.post("/Employs/Insert",
+                    { "info": obj },
                     function (res) {
                         if (res = "True") {
                             $("#dataTable").datagrid("reload");
                             $("#addDiv").window("close");
                         }
-                    })
+                    }
+                )
             }
             //更新
             if ($("#btn").data["id"] != null) {
-                var info = { "id": $("#btn").data["id"], "DepName": $("#txt_DepName").val(), "DepMark": $("#txt_DepMark").val() }
-                $.post("/Department/Update", info,
+                var obj = new Object();
+                obj.EmpID = $("#btn").data["id"];
+                obj.EmpAdd = $("#txt_EmpAdd").val();
+                obj.EmpMark = $("#txt_EmpMark").val();
+                obj.EmpName = $("#add_txt_EmpName").val();
+                obj.EmpSex = $("input[name='sex']:checked").val();
+                obj.EmpTel = $("#txt_EmpTel").val();
+                obj.LoginName = $("#txt_LoginName").val();
+                obj.EmpState = $("#txt_EmpState").val();
+                obj.DepID = $("#add_deptCob").combobox("getValue");
+                obj.DutyID = $("#add_dutyCob").combobox("getValue");
+                $.post("/Employs/Update",
+                    { "info": obj },
                     function (res) {
                         if (res = "True") {
                             $("#dataTable").datagrid("reload");
                             $("#addDiv").window("close");
                         }
-                    })
+                    }
+                )
             }
         }
     </script>
@@ -130,98 +230,83 @@
                     <td><input type="text" id="txt_EmpName" /></td>
                     <th>所属部门：</th>
                     <td>
-                        <select id="DepName">
-                            <option>全部</option>
-                            <option>人事部</option>
-                            <option>财务部</option>
-                        </select>
+                        <input id="deptCob">
                     </td>
                     <th>职位：</th>
                     <td>
-                        <select id="DutyName">
-                            <option>全部</option>
-                            <option>经理</option>
-                            <option>主管</option>
-                        </select>
+                        <input id="dutyCob">
                     </td>
                     <td>
                         &nbsp;&nbsp;
-                        <input type="button" value="查询" onclick="Enter()" />
+                        <input type="button" value="查询" onclick="Search()" />
                     </td>
                 </tr>
             </table>
         </form>
     </div>
-    <div id="toolDiv">
-        <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="showAdd()">添加</a>
-        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" href="#">离职</a>
-        <a class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" href="#">退休</a>
-    </div>
     <!--列表-->
-    <table id="dataTable" class="tableList" style="width:95%;">
+    <table id="dataTable" class="tableList" style="width:100%;">
         <thead>
             <tr>
-                <th data-options="field:'EmpID',width:20,formatter:showWork">操作</th>
-                <th data-options="field:'LoginName'">员工账号</th>
-                <th data-options="field:'DepName'">所属部门</th>
-                <th data-options="field:'DutyName',width:10">职位</th>
-                <th data-options="field:'EmpName'">员工姓名</th>
-                <th data-options="field:'EmpSex'">性别</th>
-                <th data-options="field:'EmpTel',width:10">联系电话</th>
-                <th data-options="field:'EmpAdd',width:20">家庭地址</th>
-                <th data-options="field:'EmpState'">状态</th>
+                <th data-options="field:'EmpID',width:200,formatter:showWork">操作</th>
+                <th data-options="field:'LoginName',width:100">员工账号</th>
+                <th data-options="field:'DepName',width:100">所属部门</th>
+                <th data-options="field:'DutyName',width:100">职位</th>
+                <th data-options="field:'EmpName',width:100">员工姓名</th>
+                <th data-options="field:'EmpSex',width:100">性别</th>
+                <th data-options="field:'EmpTel',width:100">联系电话</th>
+                <th data-options="field:'EmpAdd',width:100">家庭地址</th>
+                <th data-options="field:'EmpState',width:100">状态</th>
             </tr>
         </thead>
     </table>
-    <!--分页按钮集-->
-    <div id="pp" style="background:#efefef;border:1px solid #ccc;"></div>
+    <div id="toolDiv">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="showAdd()">添加</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" href="#" onclick="editState(2)">离职</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" href="#" onclick="editState(3)">退休</a>
+    </div>
+
     <!--员工增改窗体-->
     <div id="addDiv" class="easyui-window" style="padding:15px;">
         <form id="AddformData">
             <table class="tableEdit">
                 <tr>
                     <th>所属部门：</th>
-                    <td>
-                        <select>
-                            <option>人事部</option>
-                            <option>财务部</option>
-                        </select>
-                    </td>
+                    <td><input id="add_deptCob"></td>
                     <th>职位： </th>
-                    <td>
-                        <select>
-                            <option>经理</option>
-                            <option>主管</option>
-                        </select>
-                    </td>
+                    <td><input id="add_dutyCob"></td>
                 </tr>
                 <tr>
                     <th>姓名：</th>
-                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                    <td><input id="add_txt_EmpName" type="text" class="text easyui-validatebox" data-options="required:true" /></td>
                     <th>性别：</th>
-                    <td><input type="radio" checked="checked" name="sex" />男&nbsp;&nbsp;&nbsp;<input type="radio" name="sex" />女</td>
+                    <td>
+                        <input type="radio" name="sex" value="男" />男&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="sex" value="女" />女
+                    </td>
                 </tr>
                 <tr>
                     <th>联系电话：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="txt_EmpTel" type="text" /></td>
                     <th>登录账号：</th>
-                    <td></td>
+                    <td><input id="txt_LoginName" type="text" /></td>
                 </tr>
                 <tr>
                     <th>家庭地址：</th>
-                    <td colspan="5"><input type="text" style="width: 90%;" /></td>
+                    <td colspan="5"><input id="txt_EmpAdd" type="text" style="width: 90%;" /></td>
                 </tr>
                 <tr>
                     <th>描述： </th>
-                    <td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+                    <td colspan="5"><textarea id="txt_EmpMark" cols="70" rows="3"></textarea></td>
                 </tr>
             </table>
+            <input type="hidden" id="txt_EmpState" />
         </form>
         <div class="h40"></div>
         <div class="div-bottom">
             <div class='btn-group'>
                 <button id='doOk' type='button' class='btn btn-default' onclick="SaveData()"><i class='glyphicon glyphicon-saved'></i>  保存</button>
-                <button id='doClose' type='button' class='btn btn-default'onclick="closeWin()"><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+                <button id='doClose' type='button' class='btn btn-default' onclick="closeWin()"><i class='glyphicon glyphicon-remove'></i>  关闭</button>
             </div>
         </div>
     </div>

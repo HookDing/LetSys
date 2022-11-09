@@ -24,7 +24,7 @@ namespace Let.Controllers
         public ActionResult GetAllList()
         {
             var list = Bll_Department.GetAllMod();
-            list.Insert(0, new Mod.Mod_Departments { DepID = -1, DepName = "全部" });
+            list.Insert(0, new Mod.Mod_Departments { DepID = 0, DepName = "全部" });
             return Json(list);
         }
         // POST: Department/GetMod
@@ -33,14 +33,14 @@ namespace Let.Controllers
             return Json(Bll_Department.GetMod(id));
         }
         // POST: Department/Insert
-        public ActionResult Insert(Departments info)
+        public ActionResult Insert(string DepName,string DepMark)
         {
-            return Json(Bll_Department.Insert(info));
+            return Json(Bll_Department.Insert(DepName, DepMark));
         }
         // POST: Department/Update
-        public ActionResult Update(Departments info)
+        public ActionResult Update(int id,string DepName,string DepMark)
         {
-            return Json(Bll_Department.Update(info));
+            return Json(Bll_Department.Update(id,DepName,DepMark));
         }
         // POST: Department/Delete
         public ActionResult Delete(int DepID)
