@@ -10,6 +10,10 @@ namespace Bll
 {
     public class Bll_Jurisdictions
     {
+        /// <summary>
+        /// 获取所有记录
+        /// </summary>
+        /// <returns></returns>
         public static List<View_Jurisdictions> GetAllMod()
         {
             using (LetDB db =new LetDB ())
@@ -22,6 +26,11 @@ namespace Bll
                 }).ToList();
             }
         }
+        /// <summary>
+        /// 获取一条记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static View_Jurisdictions GetMod(int id)
         {
             using (LetDB db =new LetDB ())
@@ -34,6 +43,11 @@ namespace Bll
                 }).ToList()[0];
             }
         }
+        /// <summary>
+        /// 新增记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Insert(Jurisdictions info)
         {
             using (LetDB db =new LetDB ())
@@ -42,6 +56,11 @@ namespace Bll
                 return db.SaveChanges()>0;
             }
         }
+        /// <summary>
+        /// 更新记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Update(Jurisdictions info)
         {
             using (LetDB db =new LetDB ())
@@ -50,6 +69,11 @@ namespace Bll
                 return db.SaveChanges()>0;
             }
         }
+        /// <summary>
+        /// 删除记录
+        /// </summary>
+        /// <param name="JurID"></param>
+        /// <returns></returns>
         public static bool Delete(int JurID)
         {
             using (LetDB db=new LetDB())

@@ -11,7 +11,7 @@ namespace Bll
     public class Bll_Department
     {
         /// <summary>
-        /// 查询并返回全部数据
+        /// 查询并返回全部记录
         /// </summary>
         /// <returns>List<Mod_Departments></returns>
         public static List<Mod_Departments> GetAllMod()
@@ -28,7 +28,7 @@ namespace Bll
             }
         }
         /// <summary>
-        /// 根据ID查询并返回一条数据
+        /// 根据ID查询并返回一条记录
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Mod_Departments</returns>
@@ -49,7 +49,7 @@ namespace Bll
             }
         }
         /// <summary>
-        /// 添加数据
+        /// 添加记录
         /// </summary>
         /// <param name="DepName"></param>
         /// <param name="DepMark"></param>
@@ -76,7 +76,7 @@ namespace Bll
             }
         }
         /// <summary>
-        /// 修改数据
+        /// 修改记录
         /// </summary>
         /// <param name="id"></param>
         /// <param name="DepName"></param>
@@ -105,7 +105,7 @@ namespace Bll
             }
         }
         /// <summary>
-        /// 删除数据
+        /// 删除记录
         /// </summary>
         /// <param name="DepID"></param>
         /// <returns>成功为true，失败为false</returns>

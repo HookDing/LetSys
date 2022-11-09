@@ -10,6 +10,10 @@ namespace Bll
 {
     public class Bll_Customers
     {
+        /// <summary>
+        /// 获取所有记录
+        /// </summary>
+        /// <returns></returns>
         public static List<Mod_Customers> GetAllMod()
         {
             using (LetDB db = new LetDB())
@@ -27,6 +31,11 @@ namespace Bll
                     }).ToList();
             }
         }
+        /// <summary>
+        /// 获取一条记录
+        /// </summary>
+        /// <param name="id">CusID</param>
+        /// <returns></returns>
         public static Mod_Customers GetMod(int id)
         {
             using (LetDB db = new LetDB())
@@ -44,6 +53,11 @@ namespace Bll
                     }).ToList()[0];
             }
         }
+        /// <summary>
+        /// 新增记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Insert(Customers info)
         {
             using (LetDB db = new LetDB())
@@ -52,6 +66,11 @@ namespace Bll
                 return db.SaveChanges() > 0;
             }
         }
+        /// <summary>
+        /// 更新记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Update(Customers info)
         {
             using (LetDB db = new LetDB())
@@ -60,6 +79,11 @@ namespace Bll
                 return db.SaveChanges() > 0;
             }
         }
+        /// <summary>
+        /// 删除记录
+        /// </summary>
+        /// <param name="CusID"></param>
+        /// <returns></returns>
         public static bool Delete(int CusID)
         {
             using (LetDB db = new LetDB())

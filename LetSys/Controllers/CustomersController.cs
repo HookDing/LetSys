@@ -10,42 +10,32 @@ namespace LetSys.Controllers
 {
     public class CustomersController : Controller
     {
-        // GET: Customers
+        // GET: Customers/Index
         public ActionResult Index()
         {
             return View();
         }
+        // GET: Customers/GetAllMod
         public ActionResult GetAllMod()
         {
             return Json(Bll_Customers.GetAllMod());
         }
+        // POST: Customers/GetMod
         public ActionResult GetMod(int id)
         {
             return Json(Bll_Customers.GetMod(id));
         }
-        public ActionResult Insert(string CusName, string CusSex, string CusCard, string CusTel)
+        // POST: Customers/Insert
+        public ActionResult Insert(Customers info)
         {
-            Customers info = new Customers
-            {
-                CusName = CusName,
-                CusSex = CusSex,
-                CusCard = CusCard,
-                CusTel = CusTel
-            };
             return Json(Bll_Customers.Insert(info));
         }
-        public ActionResult Update(int CusID, string CusName, string CusSex, string CusCard, string CusTel)
+        // POST: Customers/Update
+        public ActionResult Update(Customers info)
         {
-            Customers info = new Customers
-            {
-                CusID = CusID,
-                CusName = CusName,
-                CusSex = CusSex,
-                CusCard = CusCard,
-                CusTel = CusTel
-            };
             return Json(Bll_Customers.Update(info));
         }
+        // POST: Customers/Delete
         public ActionResult Delete(int CusID)
         {
             return Json(Bll_Customers.Delete(CusID));

@@ -11,7 +11,7 @@ namespace Bll
     public class Bll_Dutys
     {
         /// <summary>
-        /// 查询所有数据
+        /// 查询所有记录
         /// </summary>
         /// <returns>List<Mod_Dutys></returns>
         public static List<Mod_Dutys> GetAllMod()
@@ -28,7 +28,7 @@ namespace Bll
             }
         }
         /// <summary>
-        /// 根据ID查询并返回一条数据
+        /// 根据ID查询并返回一条记录
         /// </summary>
         /// <param name="id">传入ID</param>
         /// <returns>Mod_Dutys</returns>
@@ -45,6 +45,11 @@ namespace Bll
                 }).ToList()[0];
             }
         }
+        /// <summary>
+        /// 新增记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Insert(Dutys info)
         {
             using (LetDB db=new LetDB ())
@@ -53,6 +58,11 @@ namespace Bll
                 return db.SaveChanges() > 0;
             }
         }
+        /// <summary>
+        /// 更新记录
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static bool Update(Dutys info)
         {
             using (LetDB db =new LetDB())
@@ -61,6 +71,11 @@ namespace Bll
                 return db.SaveChanges() > 0;
             }
         }
+        /// <summary>
+        /// 删除记录
+        /// </summary>
+        /// <param name="DutyID"></param>
+        /// <returns></returns>
         public static bool Delete(int DutyID)
         {
             using (LetDB db =new LetDB())

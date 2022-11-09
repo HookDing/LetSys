@@ -10,35 +10,40 @@ namespace LetSys.Controllers
 {
     public class DutysController : Controller
     {
-        // GET: Dutys
+        // GET: Dutys/Index
         public ActionResult Index()
         {
             return View();
         }
+        // GET: Dutys/GetAllMod
         public ActionResult GetAllMod()
         {
             return Json(Bll_Dutys.GetAllMod());
         }
+        // GET: Dutys/GetAllList
         public ActionResult GetAllList()
         {
             var list = Bll_Dutys.GetAllMod();
             list.Insert(0, new Mod.Mod_Dutys { DutyID = 0, DutyName = "全部" });
             return Json(list);
         }
+        // GET: Dutys/GetMod
         public ActionResult GetMod(int id)
         {
             return Json(Bll_Dutys.GetMod(id));
         }
-        public ActionResult Insert(string DutyName, string DutyMark)
+        // GET: Dutys/Insert
+        public ActionResult Insert(Dutys info)
         {
-            Dutys info = new Dutys { DutyName=DutyName,DutyMark= DutyMark,DutyState=true };
+            info.DutyState = true;
             return Json(Bll_Dutys.Insert(info));
         }
-        public ActionResult Update(int DutyID,string DutyName, string DutyMark)
+        // GET: Dutys/Update
+        public ActionResult Update(Dutys info)
         {
-            Dutys info = new Dutys {DutyID=DutyID, DutyName = DutyName, DutyMark = DutyMark,DutyState=true  };
             return Json(Bll_Dutys.Update(info));
         }
+        // GET: Dutys/Delete
         public ActionResult Delete(int DutyID)
         {
             return Json(Bll_Dutys.Delete(DutyID));

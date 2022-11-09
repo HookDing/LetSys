@@ -22,12 +22,14 @@
         //加载数据
         $(function () {
             //绑定下拉列表
+            //部门
             $("#deptCob,#add_deptCob").combobox({
                 url: '/Department/GetAllList',
                 valueField: 'DepID',
                 textField: 'DepName',
                 value: 0,
             });
+            //职位
             $("#dutyCob,#add_dutyCob").combobox({
                 url: '/Dutys/GetAllList',
                 valueField: 'DutyID',
@@ -132,7 +134,6 @@
             $("#add_deptCob").combobox({ value: 0 });
             $("#add_dutyCob").combobox({ value: 0 });
             $("#txt_LoginName").val("");
-            //单选
             $("input[name=sex]:first").prop("checked", "true");
             $("input[name=sex]:last").prop("checked", false)
             $("#addDiv").window({
@@ -143,10 +144,10 @@
         //显示编辑窗体
         function showEdit(id) {
             $("#btn").data["id"] = id;
+            //加载数据
             $.post("/Employs/GetMod",
                 { "EmpID": id },
                 function (res) {
-                    //加载数据
                     $("#txt_EmpAdd").val(res.EmpAdd);
                     $("#txt_EmpMark").val(res.EmpMark);
                     $("#add_txt_EmpName").val(res.EmpName);
@@ -244,7 +245,7 @@
             </table>
         </form>
     </div>
-    <!--列表-->
+    <!--表格展示-->
     <table id="dataTable" class="tableList" style="width:100%;">
         <thead>
             <tr>
@@ -303,6 +304,7 @@
             <input type="hidden" id="txt_EmpState" />
         </form>
         <div class="h40"></div>
+        <!--底部按钮集-->
         <div class="div-bottom">
             <div class='btn-group'>
                 <button id='doOk' type='button' class='btn btn-default' onclick="SaveData()"><i class='glyphicon glyphicon-saved'></i>  保存</button>

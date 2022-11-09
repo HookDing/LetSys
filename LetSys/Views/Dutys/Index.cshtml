@@ -23,7 +23,7 @@
     <link href="/Content/CSS/form.css" rel="stylesheet" />
     <script>
         $(function () {
-            //主表
+            //加载主表数据
             $("#dataTable").datagrid({
                 url: "/Dutys/GetAllMod",
                 rownumbers: true,
@@ -33,22 +33,15 @@
                 toolbar: "#toolDiv",
                 height: $(window).height() * 0.90
             });
+            //加载权限窗体数据
             $("#dl").datalist({
                 url: '/Jurisdictions/GetAllMod',
+                valueField: 'JurID',
+                textField: 'JurName',
                 checkbox: true,
                 lines: true,
             });
-            ////权限列表
-            //$("#tableJur").datagrid({
-            //    url: "/Jurisdictions/GetAllMod",
-            //    rownumbers: true,
-            //    singleSelect: true,
-            //    striped: true,
-            //    fitColumns: true,
-            //    toolbar: "#toolDiv",
-            //    height: $(window).height() * 0.90
-            //});
-            //弹出窗
+            //弹出窗属设置
             $("#addDiv,#JurDiv").window({
                 collapsible: false,
                 minimizable: false,
@@ -61,9 +54,6 @@
         });
         function showWork(value) {
             return "<a href='javascript:showEdit(" + value + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + value + ")'>删除</a>&nbsp;&nbsp;<a href='javascript:showJur(" + value + ")'>权限设置</a>";
-        }
-        function showJur(value) {
-            return "<input type='checkbox' value='" + value + "' />";
         }
         //添加窗体
         function showAdd() {
@@ -81,6 +71,7 @@
             $.post("/Dutys/GetMod", "id=" + id, function (res) {
                 $("#txt_DutyName").val(res.DutyName);
                 $("#txt_DutyMark").val(res.DutyMark);
+                $("#DutyState").val(res.DutyState);
                 $("#addDiv").window({
                     title: "编辑职位",
                     closed: false,
@@ -90,14 +81,14 @@
         //权限窗体
         function showJur(id) {
             $("#btn").data["id"] = id;
-            $.post("/Jurisdictions/GetAllMod", function (res) {
-                $("#txt_DutyName").val(res.DutyName);
-                $("#txt_DutyMark").val(res.DutyMark);
-                $("#JurDiv").window({
-                    title: "编辑权限",
-                    closed: false,
-                });
-            })
+            //$.post("/Jurisdictions/GetAllMod", function (res) {
+
+
+            //})
+            $("#JurDiv").window({
+                title: "编辑权限",
+                closed: false,
+            });
         }
         //删除方法
         function deleteData(DutyID) {
@@ -121,9 +112,10 @@
                 return;
             }
             if ($("#btn").data["id"] == null) {
-
                 //添加
-                var info = { "DutyName": $("#txt_DutyName").val(), "DutyMark": $("#txt_DutyMark").val() }
+                var info = new Object();
+                info.DutyName = $("#txt_DutyName").val();
+                info.DutyMark = $("#txt_DutyMark").val();
                 $.post("/Dutys/Insert", info,
                     function (res) {
                         if (res = "True") {
@@ -136,7 +128,11 @@
             }
             //更新
             if ($("#btn").data["id"] != null) {
-                var info = { "DutyID": $("#btn").data["id"], "DutyName": $("#txt_DutyName").val(), "DutyMark": $("#txt_DutyMark").val() }
+                var info = new Object();
+                info.DutyID = $("#btn").data["id"];
+                info.DutyName = $("#txt_DutyName").val();
+                info.DutyMark = $("#txt_DutyMark").val();
+                info.DutyState = $("#DutyState").val();
                 $.post("/Dutys/Update", info,
                     function (res) {
                         if (res = "True") {
@@ -149,20 +145,21 @@
             }
 
         }
-        function SaveJur() {
-            if ($("#btn").data["id"] != null) {
-                var info = { "DutyID": $("#btn").data["id"], "DutyName": $("#txt_DutyName").val(), "DutyMark": $("#txt_DutyMark").val() }
-                $.post("/Dutys/Update", info,
-                    function (res) {
-                        if (res = "True") {
-                            $("#dataTable").datagrid("reload");
-                            $("#addDiv").window("close");
-                        } else {
-                            alert("失败！")
-                        }
-                    })
-            }
-        }
+        //保存权限
+        //function SaveJur() {
+        //    if ($("#btn").data["id"] != null) {
+        //        var info = { "DutyID": $("#btn").data["id"], "DutyName": $("#txt_DutyName").val(), "DutyMark": $("#txt_DutyMark").val() }
+        //        $.post("/Dutys/Update", info,
+        //            function (res) {
+        //                if (res = "True") {
+        //                    $("#dataTable").datagrid("reload");
+        //                    $("#addDiv").window("close");
+        //                } else {
+        //                    alert("失败！")
+        //                }
+        //            })
+        //    }
+        //}
     </script>
 </head>
 <body>
@@ -194,7 +191,7 @@
                     <td colspan="5">
                         <textarea cols="40" rows="5" id="txt_DutyMark"></textarea>
                         <input type="hidden" id="key" />
-                        <input type="hidden" id="ICID" />
+                        <input type="hidden" id="DutyState" />
                     </td>
                 </tr>
             </table>
@@ -209,8 +206,8 @@
     <!-- 权限增改窗体 -->
     <div id="JurDiv" class="easyui-window">
         <ul id="dl" class="easyui-datalist" style="width:470px;height:340px">
-            <li data-options="field:'JurID,width:5'"></li>
-            <li data-options="field:'JurName,width:5'"></li>
+            <li data-options="field:'JurID,width:10'"></li>
+            <li data-options="field:'JurName,width:10'"></li>
         </ul>
         <div class="div-bottom">
             <div class='btn-group'>

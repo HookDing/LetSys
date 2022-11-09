@@ -136,6 +136,7 @@
     <Compile Include="Controllers\DutysController.cs" />
     <Compile Include="Controllers\EmploysController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JurisdicDutyController.cs" />
     <Compile Include="Controllers\JurisdictionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3492,6 +3493,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\JS\jquery-easyui-1.4.1\themes\default - 复制\images\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\JurisdicDuty\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
