@@ -1,0 +1,227 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+    <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+    <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
+    <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <link href="/Content/CSS/form.css" rel="stylesheet" />
+    <script>
+        //初始化
+        $(function () {
+            //加载数据
+            $("#tt").tree({
+                lines: true,
+                url: "/HouseInfo/GetTree",
+                onClick: function (node) {
+                    var obj = new Object();
+                    obj.HCID = node.id;
+                    $("#dataTable").datagrid({
+                        queryParams: {
+                            info : obj
+                        }
+                    })
+                }
+            });
+            $("#dataTable").datagrid({
+                url: "/HouseInfo/GetPageMod",
+                pagination: true,
+                pagesize: 10,
+                rownumbers: true,
+                singleSelect: true,
+                striped: true,
+                fitColumns: true,
+                toolbar: "#tableToolDiv",
+                height: $(window).height() * 0.90
+            });
+            //设置属性
+            $("#addCate,#addHouse").window({
+                collapsible: false,
+                minimizable: false,
+                maximizable: false,
+                draggable: false,
+                resizable: false,
+                closed: true,
+                center: true,
+            });
+        })
+        //end 初始化
+
+        function showWork(id) {
+            return "<a href='javascript:showEdit(" + id + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + id +")'>删除</a>"
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <!--左侧树状列表-->
+    <div data-options="region:'west'" style="width:200px;">
+        <a href="#" onclick="openCate()">添加</a>
+        <a href="#" onclick="openCate()">修改</a>
+        <a href="#">删除</a>
+        <ul id="tt" class="easyui-tree"></ul>
+    </div>
+    <!--右侧-->
+    <!--查询条件-->
+    <div data-options="region:'center'" style="padding-left: 5px;">
+        <div class="divselect">
+            <form id="formData">
+                <table class="tableSelect">
+                    <tr>
+                        <th>房屋位置：</th>
+                        <td><input type="text" /></td>
+                        <th>房屋编号：</th>
+                        <td><input type="text" /></td>
+                        <th>户型：</th>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <th>面积：</th>
+                        <td>
+                            <select>
+                                <option>全部</option>
+                                <option>30M²以下</option>
+                                <option>30M²-60M²</option>
+                                <option>60M²-100M²</option>
+                                <option>100M²-200M²</option>
+                                <option>200M²以上</option>
+                            </select>
+                        </td>
+                        <th>状态：</th>
+                        <td>
+                            <select>
+                                <option>全部</option>
+                                <option>待租</option>
+                                <option>维护</option>
+                                <option>已租</option>
+                            </select>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;
+                            <input type="button" value="查询" onclick="Enter()" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <!--表格-->
+        <table id="dataTable" class="tableList" style="width:100%;">
+            <thead>
+                <tr>
+                    <th data-options="field:'HID',width:150,formatter:showWork">操作</th>
+                    <th data-options="field:'HCName',width:100">房屋类型</th>
+                    <th data-options="field:'HAdd',width:100">房屋位置</th>
+                    <th data-options="field:'HNum',width:100">房号</th>
+                    <th data-options="field:'HType',width:100">户型</th>
+                    <th data-options="field:'HArea',width:100">面积</th>
+                    <th data-options="field:'HDirection',width:100">朝向</th>
+                    <th data-options="field:'HRent',width:100">租金</th>
+                    <th data-options="field:'HState',width:100">状态</th>
+                </tr>
+            </thead>
+        </table>
+        <div id="tableToolDiv">
+            <a href="#" onclick="openWin()">添加</a>
+            <a href="#" onclick="openLet()">出租</a>
+        </div>
+    </div>
+    <!--类型增改窗体-->
+    <div id="addCate" class="easyui-window" style="padding:15px;">
+        <form id="formData">
+            <table class="tableEdit">
+                <tr>
+                    <th>类型名称：</th>
+                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                </tr>
+                <tr>
+                    <th>类型描述： </th>
+                    <td><textarea cols="40" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div align="center">
+                            <input type="hidden" id="key" /><input type="hidden" id="ICID" />
+                            <span><input type="button" id="btn" value="提交" onclick="closeCate()" /> &nbsp;<input type="button" value="返回" onclick="closeCate()" /></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <!--房屋增改窗体-->
+    <div id="addHouse">
+        <form id="formData">
+            <table class="tableEdit">
+                <tr>
+                    <th>所属房屋类型：</th>
+                    <td colspan="3">
+                        <select>
+                            <option>公寓</option>
+                            <option>住宅</option>
+                            <option>门面</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>房屋地址：</th>
+                    <td colspan="3"><input type="text" class="text easyui-validatebox" style="width: 90%;" data-options="required:true" /></td>
+                </tr>
+                <tr>
+                    <th>房号：</th>
+                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                    <th>户型：</th>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <th>面积：</th>
+                    <td><input type="text" /></td>
+                    <th>朝向：</th>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <th>标准租金：</th>
+                    <td><input type="text" /></td>
+                    <th>每月网费：</th>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <th>电单价：</th>
+                    <td><input type="text" /></td>
+                    <th>水单价：</th>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <th>电初始金额：</th>
+                    <td><input type="text" /></td>
+                    <th>水初始金额：</th>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <th>描述： </th>
+                    <td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+                </tr>
+            </table>
+        </form>
+        <div class="h40"></div>
+        <div class="div-bottom">
+            <div class='btn-group'>
+                <button id='doOk' type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+                <button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
