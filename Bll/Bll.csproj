@@ -55,6 +55,8 @@
     <Compile Include="Bll_Department.cs" />
     <Compile Include="Bll_Dutys.cs" />
     <Compile Include="Bll_Employs.cs" />
+    <Compile Include="Bll_HouseCategory.cs" />
+    <Compile Include="Bll_HouseInfo.cs" />
     <Compile Include="Bll_JurisdicDuty.cs" />
     <Compile Include="Bll_Jurisdictions.cs" />
     <Compile Include="MD5Service.cs" />

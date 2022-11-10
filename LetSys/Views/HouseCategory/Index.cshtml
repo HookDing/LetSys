@@ -1,0 +1,192 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+    <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+    <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
+    <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <link href="/Content/CSS/form.css" rel="stylesheet" />
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'west'" style="width:200px;">
+        <a href="#" onclick="openCate()">添加</a>
+        <a href="#" onclick="openCate()">修改</a>
+        <a href="#">删除</a>
+        <ul id="tt" class="easyui-tree"></ul>
+    </div>
+    <div data-options="region:'center'" style="padding-left: 5px;">
+        <div class="divselect">
+            <form id="formData">
+                <table class="tableSelect">
+                    <tr>
+                        <th>房屋位置：</th>
+                        <td><input type="text" /></td>
+                        <th>房屋编号：</th>
+                        <td><input type="text" /></td>
+                        <th>户型：</th>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <th>面积：</th>
+                        <td>
+                            <select>
+                                <option>全部</option>
+                                <option>30M²以下</option>
+                                <option>30M²-60M²</option>
+                                <option>60M²-100M²</option>
+                                <option>100M²-200M²</option>
+                                <option>200M²以上</option>
+                            </select>
+                        </td>
+                        <th>状态：</th>
+                        <td>
+                            <select>
+                                <option>全部</option>
+                                <option>待租</option>
+                                <option>维护</option>
+                                <option>已租</option>
+                            </select>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;
+                            <input type="button" value="查询" onclick="Enter()" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <a href="#" onclick="openWin()">添加</a>
+        <a href="#" onclick="openLet()">出租</a>
+        <table class="tableList" style="width:100%;">
+            <thead>
+                <tr>
+                    <th style="width:20px;"></th>
+                    <th>操作</th>
+                    <th>房屋类型</th>
+                    <th>房屋位置</th>
+                    <th>房号</th>
+                    <th>户型</th>
+                    <th>面积</th>
+                    <th>朝向</th>
+                    <th>租金</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                        &nbsp;&nbsp;<a href="#">维护设置</a>
+                    </td>
+                    <td>公寓</td>
+                    <td>长沙市岳麓区涉外公馆</td>
+                    <td>18栋302</td>
+                    <td>1房</td>
+                    <td>35</td>
+                    <td>南</td>
+                    <td>1300</td>
+                    <td>未租</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <a href="#" onclick="openWin()">编辑</a>
+                    </td>
+                    <td>公寓</td>
+                    <td>长沙市岳麓区涉外公馆</td>
+                    <td>18栋302</td>
+                    <td>1房</td>
+                    <td>35</td>
+                    <td>南</td>
+                    <td>1300</td>
+                    <td>已租</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>
+                        <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                        &nbsp;&nbsp;<a href="#">维护完成</a>
+                    </td>
+                    <td>公寓</td>
+                    <td>长沙市岳麓区涉外公馆</td>
+                    <td>18栋302</td>
+                    <td>1房</td>
+                    <td>35</td>
+                    <td>南</td>
+                    <td>1300</td>
+                    <td>维护</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>
+                        <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
+                        &nbsp;&nbsp;<a href="#">维护设置</a>
+                    </td>
+                    <td>公寓</td>
+                    <td>长沙市岳麓区涉外公馆</td>
+                    <td>18栋302</td>
+                    <td>1房</td>
+                    <td>35</td>
+                    <td>南</td>
+                    <td>1300</td>
+                    <td>未租</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>
+                        <a href="#" onclick="openWin()">编辑</a>
+                    </td>
+                    <td>公寓</td>
+                    <td>长沙市岳麓区涉外公馆</td>
+                    <td>18栋302</td>
+                    <td>1房</td>
+                    <td>35</td>
+                    <td>南</td>
+                    <td>1300</td>
+                    <td>已租</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#">首页</a>
+        <a href="#">上一页</a>
+        <a href="#">下一页</a>
+        <a href="#">尾页</a>
+    </div>
+    <div id="addDiv" class="easyui-window" style="padding:15px;">
+        <form id="formData">
+            <table class="tableEdit">
+                <tr>
+                    <th>类型名称：</th>
+                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                </tr>
+                <tr>
+                    <th>类型描述： </th>
+                    <td><textarea cols="40" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div align="center">
+                            <input type="hidden" id="key" /><input type="hidden" id="ICID" />
+                            <span><input type="button" id="btn" value="提交" onclick="closeCate()" /> &nbsp;<input type="button" value="返回" onclick="closeCate()" /></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+
