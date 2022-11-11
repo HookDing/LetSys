@@ -12,6 +12,10 @@ namespace Bll
 {
     public class Bll_PayInfo
     {
+        /// <summary>
+        /// 获取所有缴费记录
+        /// </summary>
+        /// <returns></returns>
         public static List<Mod_PayInfo> GetAllMod()
         {
             using (LetDB db = new LetDB())
@@ -38,7 +42,12 @@ namespace Bll
                     }).ToList();
             }
         }
-        public static List<Mod_PayInfo> GetPayInfoMod(int PayID)
+        /// <summary>
+        /// 根据缴费编号查询
+        /// </summary>
+        /// <param name="PayID"></param>
+        /// <returns></returns>
+        public static Mod_PayInfo GetMod(int PayID)
         {
             using (LetDB db = new LetDB())
             {
@@ -61,9 +70,13 @@ namespace Bll
                         LetID = n.LetID,
                         CCID = n.CCID,
                         HNum = n.Lets.HouseInfo.HNum,
-                    }).ToList();
+                    }).ToList()[0];
             }
         }
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="list">需要修改的数据列</param>
         public static void UpdateList(List<Mod_PayInfo> list)
         {
             using (LetDB db = new LetDB())
@@ -95,7 +108,6 @@ namespace Bll
                             payinfo.PayState = 2;//缴费中
                         }
                         db.Entry(payinfo).State = EntityState.Modified;
-                        db.SaveChanges();
                     }
                 }
             }

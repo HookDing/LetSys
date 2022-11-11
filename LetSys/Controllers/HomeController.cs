@@ -9,7 +9,10 @@ namespace Let.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: 登录
+        /// <summary>
+        /// 登录窗体
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Login()
         {
             return View();
@@ -46,6 +49,10 @@ namespace Let.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 默认窗体
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Default()
         {
             return View();
@@ -58,7 +65,10 @@ namespace Let.Controllers
         {
             return View();
         }
-        
+        /// <summary>
+        /// 安全退出
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logout()
         {
             Session["user"] = null;
