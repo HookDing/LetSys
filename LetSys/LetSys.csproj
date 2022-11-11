@@ -140,6 +140,7 @@
     <Compile Include="Controllers\HouseInfoController.cs" />
     <Compile Include="Controllers\JurisdicDutyController.cs" />
     <Compile Include="Controllers\JurisdictionsController.cs" />
+    <Compile Include="Controllers\PayInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3491,6 +3492,7 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\HouseCategory\Index.cshtml" />
     <Content Include="Views\HouseInfo\Index.cshtml" />
+    <Content Include="Views\PayInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

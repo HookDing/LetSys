@@ -59,6 +59,7 @@
     <Compile Include="Bll_HouseInfo.cs" />
     <Compile Include="Bll_JurisdicDuty.cs" />
     <Compile Include="Bll_Jurisdictions.cs" />
+    <Compile Include="Bll_PayInfo.cs" />
     <Compile Include="MD5Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
