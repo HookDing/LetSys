@@ -18,6 +18,91 @@
     <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
     <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
     <link href="/Content/CSS/form.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $("#dataTable").datagrid({
+                url: "/PayInfo/GetAllMod",
+                rownumbers: true,
+                singleSelect: true,
+                striped: true,
+                fitColumns: true,
+                height: 400
+            })
+        })
+        function showCheckbox(value, data) {
+            return "<input type='checkbox' payID='" + value + "' onChange='showData(this," + value + "," + data.letID + ")' />";
+        }
+        function showData(ck, payID, letID) {
+            if ($(ck).is(":checked")) {
+                //判断表格中是否包含数据
+                var rows = $("#payTable tbody tr");
+                if (rows.length > 0) {
+                    var id = $(rows[0]).attr("letID");
+                    if (id != letID) {
+                        alert("不同")
+                        $(ck).removeAttr("checked");
+                        return;
+                    }
+                }
+                $.post("/PayInfo/GetMod", "payID=" + payID, function (data) {
+                    $("#payTable tbody").append(
+                        "<tr letID='" + letID + "' payID='" + payID + "'><td>"
+                        + data.CCName + "</td><td>"
+                        + data.HNum + "</td><td>"
+                        + data.CusName + "</td><td>"
+                        + data.PayMoney1 + "</td><td class='m1'>"
+                        + (data.Money1 - data.Money2) + "</td><td><input class='m2' type='text' onchange='changeData(this)'/></td><td>"
+                        + data.PayPrice + "</td><td>"
+                        + data.PayAmount + "</td><td>"
+                        + parseData(data.PayBeginDate) + "</td><td>"
+                        + parseData(data.PayEndDate) + "</td><td><a href='javascript:deleteData("
+                        + payID + ")'</a></td></tr>");
+                    opreationData();
+                });
+            }
+            else {
+                $("#payTable tbody tr[payID='" + payID + "']").remove();
+                opreationData();
+            }
+        }
+        //实际缴费金额
+        function changeData(obj) {
+            var money2 = parseFloat($(obj).parent().prev().text(), 10);
+            var money = parseFloat($(obj).val());
+            if (money > money2) {
+                alert("实缴金额不能大于应缴剩余金额！")
+                $(obj).val(money2);
+            }
+            opreationData();
+        }
+        //计算金额
+        function opreationData() {
+            var m1 = $("#payTable .m1");
+            var m2 = $("#payTable .m2");
+            var m1Sum = 0;
+            var m2Sum = 0;
+            for (var i = 0; i < m1.length; i++) {
+                m1Sum += parseFloat($(m1[i]).text(), 10);
+                if (isNaN(parseFloat($(m2[i]).val(), 10))) {
+                    m2Sum = 0;
+                } else {
+                    m2Sum += parseFloat($(m2[i]).val());
+                }
+            }
+            $("#SumSpan1").text(m1Sum);
+            $("#SumSpan2").text(m2Sum);
+        }
+        function parseData(value) {
+            try {
+                var date = new Date(parseInt(/\d+/.exec(value)[0]));
+                var year = parseInt(date.getFullYear(), 10);
+                if (year > 2500 || year < 1900) { return ""; }
+                return date.getFullYear() + "-"(date.getMonth() + 1) + "-" + data.getDate();
+            } catch (e) {
+                return "";
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="divselect">
@@ -63,7 +148,7 @@
     </div>
     <div id="jfDiv" class="divselect">
         <form id="PayForm">
-            <table id="StuInfo" class="ManualTable" style="width:100%">
+            <table id="payTable" class="ManualTable" style="width:100%">
                 <thead>
                     <tr style="font-size: 14px">
                         <th scope='col' class='rounded-company'>收费科目</th>
@@ -80,32 +165,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>房租</td>
-                        <td>19栋302</td>
-                        <td>张三</td>
-                        <td>3000</td>
-                        <td>3000</td>
-                        <td><input type="text" /></td>
-                        <td>1000</td>
-                        <td>3</td>
-                        <td>2021-01-01</td>
-                        <td>2021-03-31</td>
-                        <td><a href="#">删除</a></td>
-                    </tr>
-                    <tr>
-                        <td>水费</td>
-                        <td>19栋302</td>
-                        <td>张三</td>
-                        <td>100</td>
-                        <td>50</td>
-                        <td><input type="text" /></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">删除</a></td>
-                    </tr>
+                    @* 数据追加 *@
                 </tbody>
                 <tfoot>
                     <tr>
@@ -123,112 +183,25 @@
             <input type="button" value="保存" style="width:100px" />
         </div>
     </div>
-    <table class="tableList" style="width:100%;">
+    <table id="dataTable" style="width:100%;">
         <thead>
             <tr>
-                <th style="width:20px;"></th>
-                <th>勾选</th>
-                <th>缴费编号</th>
-                <th>房号</th>
-                <th>客户姓名</th>
-                <th>收费科目</th>
-                <th>单价</th>
-                <th>数量</th>
-                <th>应缴金额</th>
-                <th>实缴金额</th>
-                <th>开始时间</th>
-                <th>结束时间</th>
-                <th>发起人</th>
-                <th>状态</th>
+                <th data-options="field:'PayID',width:50,formatter:showCheckbox">勾选</th>
+                <th data-options="field:'PayNum',width:180">缴费编号</th>
+                <th data-options="field:'HNum',width:100">房号</th>
+                <th data-options="field:'CusName',width:100">客户姓名</th>
+                <th data-options="field:'CCName',width:100">收费科目</th>
+                <th data-options="field:'PayPrice',width:100">单价</th>
+                <th data-options="field:'PayAmount',width:100">数量</th>
+                <th data-options="field:'PayMoney1',width:100">应缴金额</th>
+                <th data-options="field:'PayMoney2',width:100">实缴金额</th>
+                <th data-options="field:'PayBeginDate',width:180,formatter:function(value){return parseData(value);}">开始时间</th>
+                <th data-options="field:'PayEndDate',width:180,formatter:function(value){return parseData(value);}">结束时间</th>
+                <th data-options="field:'EmpName',width:100">发起人</th>
+                <th data-options="field:'PayState',width:100">状态</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td><input type="checkbox" /></td>
-                <td>CW202001020001</td>
-                <td>19栋302</td>
-                <td>张三</td>
-                <td>房租</td>
-                <td>1500</td>
-                <td>3</td>
-                <td>4500</td>
-                <td>0</td>
-                <td>2020-01-01</td>
-                <td>2020-01-31</td>
-                <td>李四</td>
-                <td>未缴费</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td><input type="checkbox" /></td>
-                <td>CW202001020001</td>
-                <td>19栋302</td>
-                <td>张三</td>
-                <td>房租</td>
-                <td>1500</td>
-                <td>3</td>
-                <td>4500</td>
-                <td>1000</td>
-                <td>2020-01-01</td>
-                <td>2020-01-31</td>
-                <td>李四</td>
-                <td>缴费中</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td></td>
-                <td>CW202001020001</td>
-                <td>19栋302</td>
-                <td>张三</td>
-                <td>房租</td>
-                <td>1500</td>
-                <td>3</td>
-                <td>4500</td>
-                <td>4500</td>
-                <td>2020-01-01</td>
-                <td>2020-01-31</td>
-                <td>李四</td>
-                <td>已缴费</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td><input type="checkbox" /></td>
-                <td>CW202001020001</td>
-                <td>19栋302</td>
-                <td>张三</td>
-                <td>房租</td>
-                <td>1500</td>
-                <td>3</td>
-                <td>4500</td>
-                <td>4500</td>
-                <td>2020-01-01</td>
-                <td>2020-01-31</td>
-                <td>李四</td>
-                <td>已缴费</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td><input type="checkbox" /></td>
-                <td>CW202001020001</td>
-                <td>19栋302</td>
-                <td>张三</td>
-                <td>房租</td>
-                <td>1500</td>
-                <td>3</td>
-                <td>4500</td>
-                <td>0</td>
-                <td>2020-01-01</td>
-                <td>2020-01-31</td>
-                <td>李四</td>
-                <td>未缴费</td>
-            </tr>
-        </tbody>
     </table>
-    <a href="#">首页</a>
-    <a href="#">上一页</a>
-    <a href="#">下一页</a>
-    <a href="#">尾页</a>
 </body>
 </html>
 

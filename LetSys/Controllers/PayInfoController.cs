@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bll;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,14 @@ namespace LetSys.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult GetAllMod()
+        {
+            return Json(Bll_PayInfo.GetAllMod());
+        }
+        public ActionResult GetMod(int payID)
+        {
+            return Json(Bll_PayInfo.GetMod(payID));
         }
     }
 }

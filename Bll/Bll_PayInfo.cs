@@ -3,6 +3,7 @@ using Mod;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -150,6 +151,25 @@ namespace Bll
                 info.PayState = 0;
                 db.Entry(info).State = EntityState.Modified;
                 return db.SaveChanges() > 0;
+            }
+        }
+        /// <summary>
+        /// 获取饼状报表
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static List<Mod_Chart1> GetChart1(DateTime date)
+        {
+            using (LetDB db = new LetDB())
+            {
+                return db.PayInfo
+                    .Where(n => SqlFunctions.DatePart("YYYY", n.CreateDate) == date.Year && SqlFunctions.DatePart("MM", n.CreateDate) == date.Month)
+                    .GroupBy(n => n.Lets.HouseInfo.HouseCategory.HCName).Select(n => new Mod_Chart1
+                    {
+                        name = n.Key,
+                        value = (decimal)n.Sum(m => m.PayMoney2)
+
+                    }).ToList();
             }
         }
     }
