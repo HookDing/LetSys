@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+    <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+    <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
+    <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <script src="~/Content/JS/echarts.min.js"></script>
+    <script>
+        var myChart;
+        $(function () {
+            myChart = echarts.init(document.getElementById("divChart"));
+            myChart.setOption({
+                title: {
+                    text: '房屋分类报表',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: '房屋类型',
+                        type: 'pie',
+                        radius: '80%'
+                    }
+                ]
+            });
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <div></div>
+    </div>
+
+    <div>
+        <table id="dataTable" style="width:100%;">
+            <thead>
+                <tr>
+                    <th data-options="field:'LoginName',width:100">房屋类型</th>
+                    <th data-options="field:'DepName',width:100"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
+</html>
