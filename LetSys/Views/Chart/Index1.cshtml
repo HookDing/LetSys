@@ -18,6 +18,7 @@
     <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
     <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
     <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <script src="~/Content/JS/laydate/laydate.js"></script>
     <script src="~/Content/JS/echarts.min.js"></script>
     <script>
         var myChart;
@@ -43,22 +44,60 @@
                     }
                 ]
             });
+            //日期
+            laydate.render({
+                elem: '#txtDate',
+                type: 'month',
+                theme: 'molv'
+            });
+            //初始化datagrid
+            $("#dataTable").datagrid({
+                rownumbers: true,
+                singleSelect: true,
+                striped: true,
+                fitColumns: true,
+                height: 300
+            });
         })
+        function selectBtn() {
+            var value = $("#txtDate").val();
+            if (value == "") {
+                alert("请输入日期")
+                return
+            }
+            $.post("/Chart/GetData1", "value=" + value, function (data) {
+                myChart.setOption({ series: [{ data: data }] });
+                $("#dataTable").datagrid({ data: data });
+            })
+        }
     </script>
 </head>
 <body>
-    <div>
-        <div></div>
+    <div class="divselect">
+        <form id="formData">
+            <table class="tableSelect">
+                <tr>
+                    <th>员工姓名: </th>
+                    <td><input type="text" id="txtDate" /></td>
+                    <td>
+                        &nbsp;&nbsp;
+                        <input type="button" value="查询" onclick="selectBtn()" />
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
-
-    <div>
+    <div id="divChart" style="width: 70%;height:500px; float:left"></div>
+    <div style="width:30%;height:500px; float:left">
         <table id="dataTable" style="width:100%;">
             <thead>
                 <tr>
-                    <th data-options="field:'LoginName',width:100">房屋类型</th>
-                    <th data-options="field:'DepName',width:100"></th>
+                    <th data-options="field:'name',width:100">房屋类型</th>
+                    <th data-options="field:'value',width:100">总金额</th>
                 </tr>
             </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
 </body>

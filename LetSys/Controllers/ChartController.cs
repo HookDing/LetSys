@@ -10,7 +10,7 @@ namespace LetSys.Controllers
     public class ChartController : Controller
     {
         // GET: Chart
-        public ActionResult Index()
+        public ActionResult Index1()
         {
             return View();
         }
