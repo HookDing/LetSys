@@ -31,6 +31,33 @@ namespace Bll
                     }).ToList();
             }
         }
+        public static List<Mod_Customers> GetPageMod(int index, int pageSize, Mod_Customers info, out int count)
+        {
+            using (LetDB db = new LetDB())
+            {
+                var where = db.Customers.Where(n => n.CusState > 0);
+                if (!string.IsNullOrWhiteSpace(info.CusName))
+                {
+                    where = where.Where(n => n.CusName.Contains(info.CusName));
+                }
+                var list = where
+                    .OrderByDescending(n => n.CusID)
+                    .Skip((index - 1) * pageSize)
+                    .Take(pageSize)
+                    .Select(n => new Mod_Customers
+                    {
+                        CusID = n.CusID,
+                        CusName = n.CusName,
+                        CusSex = n.CusSex,
+                        CusCard = n.CusCard,
+                        CusState = n.CusState,
+                        CusTel = n.CusTel
+                    }).ToList();
+                count = where.Count();
+                return list;
+
+            }
+        }
         /// <summary>
         /// 获取一条记录
         /// </summary>
@@ -62,6 +89,7 @@ namespace Bll
         {
             using (LetDB db = new LetDB())
             {
+                info.CusState = 1;
                 db.Customers.Add(info);
                 return db.SaveChanges() > 0;
             }

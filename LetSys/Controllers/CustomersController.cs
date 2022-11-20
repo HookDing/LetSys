@@ -1,5 +1,6 @@
 ﻿using Bll;
 using Dal;
+using Mod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,16 @@ namespace LetSys.Controllers
         {
             return View();
         }
-        // GET: Customers/GetAllMod
-        public ActionResult GetAllMod()
+        // GET: Customers/GetPageMod
+        public ActionResult GetPageMod(int page, int rows, Mod_Customers info)
         {
-            return Json(Bll_Customers.GetAllMod());
+            int count;
+            if (info == null)
+            {
+                info = new Mod_Customers();
+            }
+            var list = Bll_Customers.GetPageMod(page, rows, info, out count);
+            return Json(new { rows = list, total = count });
         }
         // POST: Customers/GetMod
         public ActionResult GetMod(int id)
