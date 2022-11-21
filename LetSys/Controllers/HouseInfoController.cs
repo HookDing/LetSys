@@ -16,19 +16,7 @@ namespace LetSys.Controllers
         {
             return View();
         }
-        public ActionResult GetTree()
-        {
-            var list = Bll_HouseCategory.GetAllMod().Select(n => new
-            {
-                id = n.HCID,
-                text = n.HCName,
-            }).ToList();
-            //创建树状列表
-            var arr = new ArrayList();
-            //向列表中添加数据(new{值,文本,子集})
-            arr.Add(new { id = -1, text = "全部", children = list });
-            return Json(arr);
-        }
+        
         public ActionResult GetPageMod(int page, int rows, Mod_HouseInfo info)
         {
             int count;
@@ -39,6 +27,22 @@ namespace LetSys.Controllers
             var list = Bll_HouseInfo.GetPageMod(page, rows, info, out count);
             return Json(new { rows = list, total = count });
 
+        }
+        public ActionResult GetMod(int HID)
+        {
+            return Json(Bll_HouseInfo.GetMod(HID));
+        }
+        public ActionResult Insert(Mod_HouseInfo info)
+        {
+            return Json(Bll_HouseInfo.Insert(info));
+        }
+        public ActionResult Update(Mod_HouseInfo info)
+        {
+            return Json(Bll_HouseInfo.Update(info));
+        }
+        public ActionResult Delete(int HID)
+        {
+            return Json(Bll_HouseInfo.Delete(HID));
         }
     }
 }

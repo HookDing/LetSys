@@ -24,13 +24,13 @@
             //加载数据
             $("#tt").tree({
                 lines: true,
-                url: "/HouseInfo/GetTree",
+                url: "/HouseCategory/GetTree",
                 onClick: function (node) {
                     var obj = new Object();
                     obj.HCID = node.id;
                     $("#dataTable").datagrid({
                         queryParams: {
-                            info : obj
+                            info: obj
                         }
                     })
                 }
@@ -58,36 +58,284 @@
             });
         })
         //end 初始化
-
+        //自定义工具链接
         function showWork(id) {
-            return "<a href='javascript:showEdit(" + id + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteData(" + id +")'>删除</a>"
+            return "<a href='javascript:openHInfo(" + id + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteHInfo(" + id + ")'>删除</a>"
         }
+        //关闭窗体
+        function closeWin() {
+            $("#addCate,#addHouse").window({
+                closed: true,
+            });
+        }
+        //显示消息
+        function showMsg(msg) {
+            $.messager.show({
+                msg: msg,
+                timeout: 1000,
+                showType: 'fade',
+                style: {
+                    right: '',
+                    bottom: ''
+                }
+            });
+        }
+
+        //begin tree操作(房屋类型)
+        //获取房屋类型编号
+        function getSelectedID() {
+            var node = $('#tt').tree('getSelected');
+            if (node == null) {
+                alert("您还未选择任何数据！");
+                return;
+            }
+            return node.id
+        }
+        //打开房屋类型窗体
+        function openCate(value) {
+            if (value == "Add") {//添加
+                $("#HC").data["id"] = null;
+                //清空数据
+                $("#t_HCName,#t_HCMark,#t_HCState").val(null)
+                $("#addCate").window({
+                    title: "添加房屋类型",
+                    closed: false,
+                });
+            }
+            if (value == "Edit") {//修改
+                $("#HC").data["id"] = getSelectedID();
+                if ($("#HC").data["id"] == null) {
+                    return
+                }
+                //加载数据
+                $.post("/HouseCategory/GetMod",
+                    { "HCID": $("#HC").data["id"] },
+                    function (res) {
+                        $("#t_HCName").val(res.HCName);
+                        $("#t_HCMark").val(res.HCMark);
+                        $("#t_HCState").val(res.HCState);
+                        //打开窗体
+                        $("#addCate").window({
+                            title: "修改房屋类型",
+                            closed: false,
+                        });
+                    })
+            }
+        }
+        //保存房屋类型数据
+        function saveHCInfo() {
+            if ($("#HC").data["id"] == null) {//添加
+                var info = new Object;
+                info.HCName = $("#t_HCName").val();
+                info.HCMark = $("#t_HCMark").val();
+                $.post("/HouseCategory/Insert", info,
+                    function (res) {
+                        if (res = "true") {
+                            showMsg("添加成功！")
+                            $('#tt').tree('reload')
+                            $("#addCate").window({
+                                closed: true,
+                            });
+                        }
+                    }
+                )
+            }
+            if ($("#HC").data["id"] != null) {//修改
+                var info = new Object;
+                info.HCName = $("#t_HCName").val();
+                info.HCMark = $("#t_HCMark").val();
+                info.HCID = $("#HC").data["id"];
+                info.HCState = $("#t_HCState").val();
+                $.post("/HouseCategory/Update", info,
+                    function (res) {
+                        if (res = "true") {
+                            showMsg("修改成功！")
+                            $('#tt').tree('reload')
+                            $("#addCate").window({
+                                closed: true,
+                            });
+                        }
+                    }
+                )
+            }
+        }
+        //删除房屋类型数据
+        function deleteCate() {
+            if (confirm("确认删除？")) {
+                $.post("/HouseCategory/Delete",
+                    { "HCID": getSelectedID() },
+                    function (res) {
+                        if (res = "true") {
+                            showMsg("删除成功！")
+                            $('#tt').tree('reload')
+                        }
+                    }
+                )
+            }
+        }
+        //end tree操作(房屋类型)
+
+        //begin 表格操作(房屋信息)
+        //条件查询
+        function Search() {
+            var info = new Object();
+            info.HAdd = $("#S_HAdd").val();
+            info.HNum = $("#S_HNum").val();
+            info.HType = $("#S_HType").val();
+            info.HArea = $("#HArea").val();
+            info.HState = $("#HState").val();
+            $("#dataTable").datagrid({
+                queryParams: {
+                    info: info
+                }
+            });
+        }
+        //打开房屋信息窗体
+        function openHInfo(value) {
+            if (value == null) {//新增
+                $("#HI").data["id"] = null;
+                //清空数据
+                $("#HCID,#HAdd,#HNum,#HType,#HArea,#HDirection,#HRent").val(null);
+                $("#HNet,#HElectric,#HWater,#HElectricMoney,#HWaterMoney,#HMark,#HCName").val(null)
+                //打开窗体
+                $("#addHouse").window({
+                    title: "添加房屋信息",
+                    closed: false,
+                });
+
+            }
+            else {//修改
+                $("#HI").data["id"] = value;
+                //加载数据
+                $.post("/HouseInfo/GetMod", { "HID": value }, function (res) {
+                    $("#HState").val(res.HState);
+                    $("#HCID").val(res.HCID);
+                    $("#HAdd").val(res.HAdd);
+                    $("#HNum").val(res.HNum);
+                    $("#HType").val(res.HType);
+                    $("#HArea").val(res.HArea);
+                    $("#HDirection").val(res.HDirection);
+                    $("#HRent").val(res.HRent);
+                    $("#HNet").val(res.HNet);
+                    $("#HElectric").val(res.HElectric);
+                    $("#HWater").val(res.HWater);
+                    $("#HElectricMoney").val(res.HElectricMoney);
+                    $("#HWaterMoney").val(res.HWaterMoney);
+                    $("#HMark").val(res.HMark);
+                    $("#HCName").val(res.HCName);
+                    //打开窗体
+                    $("#addHouse").window({
+                        title: "修改房屋信息",
+                        closed: false,
+                    });
+
+                })
+            }
+        }
+        //保存房屋信息数据
+        function saveHInfo() {
+            if ($("#HI").data["id"] == null) {//新增
+                var info = new Object();
+                info.HState = $("#HState").val();
+                info.HCID = $("#HCID").val();
+                info.HAdd = $("#HAdd").val();
+                info.HNum = $("#HNum").val();
+                info.HType = $("#HType").val();
+                info.HArea = $("#HArea").val();
+                info.HDirection = $("#HDirection").val();
+                info.HRent = $("#HRent").val();
+                info.HNet = $("#HNet").val();
+                info.HElectric = $("#HElectric").val();
+                info.HWater = $("#HWater").val();
+                info.HElectricMoney = $("#HElectricMoney").val();
+                info.HWaterMoney = $("#HWaterMoney").val();
+                info.HMark = $("#HMark").val();
+                info.HCName = $("#HCName").val();
+                $.post("/HouseInfo/Insert", info, function (res) {
+                    if (res == true) {
+                        showMsg("添加成功！")
+                        $("#dataTable").datagrid("reload");
+                        //关闭窗体
+                        $("#addHouse").window({
+                            closed: true,
+                        });
+                    }
+                })
+            }
+            else {//修改
+                var info = new Object();
+                info.HID = $("#HI").data["id"];
+                info.HState = $("#HState").val();
+                info.HCID = $("#HCID").val();
+                info.HAdd = $("#HAdd").val();
+                info.HNum = $("#HNum").val();
+                info.HType = $("#HType").val();
+                info.HArea = $("#HArea").val();
+                info.HDirection = $("#HDirection").val();
+                info.HRent = $("#HRent").val();
+                info.HNet = $("#HNet").val();
+                info.HElectric = $("#HElectric").val();
+                info.HWater = $("#HWater").val();
+                info.HElectricMoney = $("#HElectricMoney").val();
+                info.HWaterMoney = $("#HWaterMoney").val();
+                info.HMark = $("#HMark").val();
+                info.HCName = $("#HCName").val();
+                $.post("/HouseInfo/Update", info, function (res) {
+                    if (res == true) {
+                        showMsg("更新成功！")
+                        $("#dataTable").datagrid("reload");
+                        //关闭窗体
+                        $("#addHouse").window({
+                            closed: true,
+                        });
+                    }
+                })
+            }
+        }
+        //删除房屋信息数据
+        function deleteHInfo(HID) {
+            if (confirm("删除？")) {
+                $.post("/HouseInfo/Delete", { "HID": HID } , function (res) {
+                    if (res == true) {
+                        showMsg("删除成功！")
+                        $("#dataTable").datagrid("reload");
+                    }
+                })
+            }
+        }
+        //end 表格操作(房屋信息)
     </script>
 </head>
 <body class="easyui-layout">
     <!--左侧树状列表-->
     <div data-options="region:'west'" style="width:200px;">
-        <a href="#" onclick="openCate()">添加</a>
-        <a href="#" onclick="openCate()">修改</a>
-        <a href="#">删除</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="openCate('Add')">添加</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" href="#" onclick="openCate('Edit')">修改</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-no',plain:true" href="#" onclick="deleteCate()">删除</a><br />
         <ul id="tt" class="easyui-tree"></ul>
     </div>
-    <!--右侧-->
-    <!--查询条件-->
+    <!--右侧表格-->
     <div data-options="region:'center'" style="padding-left: 5px;">
+        <!--查询条件-->
         <div class="divselect">
             <form id="formData">
                 <table class="tableSelect">
                     <tr>
                         <th>房屋位置：</th>
-                        <td><input type="text" /></td>
-                        <th>房屋编号：</th>
-                        <td><input type="text" /></td>
+                        <td>
+                            <input id="S_HAdd" type="text" />
+                        </td>
+                        <th>房号：</th>
+                        <td>
+                            <input id="S_HNum" type="text" />
+                        </td>
                         <th>户型：</th>
-                        <td><input type="text" /></td>
+                        <td>
+                            <input id="S_HType" type="text" />
+                        </td>
                     </tr>
                     <tr>
-                        <th>面积：</th>
+                        <th>面积：</th><!--HArea-->
                         <td>
                             <select>
                                 <option>全部</option>
@@ -98,7 +346,7 @@
                                 <option>200M²以上</option>
                             </select>
                         </td>
-                        <th>状态：</th>
+                        <th>状态：</th><!--HState-->
                         <td>
                             <select>
                                 <option>全部</option>
@@ -107,9 +355,8 @@
                                 <option>已租</option>
                             </select>
                         </td>
-                        <td>
-                            &nbsp;&nbsp;
-                            <input type="button" value="查询" onclick="Enter()" />
+                        <td style="padding-left:30px">
+                            <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
                         </td>
                     </tr>
                 </table>
@@ -132,39 +379,38 @@
             </thead>
         </table>
         <div id="tableToolDiv">
-            <a href="#" onclick="openWin()">添加</a>
-            <a href="#" onclick="openLet()">出租</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="openHInfo(null)">添加</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-man',plain:true" href="#" onclick="openLet()">出租</a>
         </div>
     </div>
-    <!--类型增改窗体-->
+    <!--房屋类型增改窗体-->
     <div id="addCate" class="easyui-window" style="padding:15px;">
         <form id="formData">
+            <input type="hidden" id="t_HCState" />
             <table class="tableEdit">
                 <tr>
                     <th>类型名称：</th>
-                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                    <td><input id="t_HCName" type="text" class="text easyui-validatebox" data-options="required:true" /></td>
                 </tr>
                 <tr>
                     <th>类型描述： </th>
-                    <td><textarea cols="40" rows="3"></textarea></td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <div align="center">
-                            <input type="hidden" id="key" /><input type="hidden" id="ICID" />
-                            <span><input type="button" id="btn" value="提交" onclick="closeCate()" /> &nbsp;<input type="button" value="返回" onclick="closeCate()" /></span>
-                        </div>
-                    </td>
+                    <td><textarea id="t_HCMark" cols="40" rows="3"></textarea></td>
                 </tr>
             </table>
         </form>
+        <div class="div-bottom">
+            <div class='btn-group'>
+                <button onclick="saveHCInfo()" type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+                <button onclick="closeWin()" type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+            </div>
+        </div>
     </div>
     <!--房屋增改窗体-->
     <div id="addHouse">
         <form id="formData">
             <table class="tableEdit">
                 <tr>
-                    <th>所属房屋类型：</th>
+                    <th>所属房屋类型：</th><!--HCID HCName-->
                     <td colspan="3">
                         <select>
                             <option>公寓</option>
@@ -175,49 +421,49 @@
                 </tr>
                 <tr>
                     <th>房屋地址：</th>
-                    <td colspan="3"><input type="text" class="text easyui-validatebox" style="width: 90%;" data-options="required:true" /></td>
+                    <td colspan="3"><input id="HAdd" type="text" class="text easyui-validatebox" style="width: 90%;" data-options="required:true" /></td>
                 </tr>
                 <tr>
                     <th>房号：</th>
-                    <td><input type="text" class="text easyui-validatebox" data-options="required:true" /></td>
+                    <td><input id="HNum" type="text" class="text easyui-validatebox" data-options="required:true" /></td>
                     <th>户型：</th>
-                    <td><input type="text"></td>
+                    <td><input id="HType" type="text"></td>
                 </tr>
                 <tr>
                     <th>面积：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HArea" type="text" /></td>
                     <th>朝向：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HDirection" type="text" /></td>
                 </tr>
                 <tr>
                     <th>标准租金：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HRent" type="text" /></td>
                     <th>每月网费：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HNet" type="text" /></td>
                 </tr>
                 <tr>
                     <th>电单价：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HElectric" type="text" /></td>
                     <th>水单价：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HWater" type="text" /></td>
                 </tr>
                 <tr>
                     <th>电初始金额：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HElectricMoney" type="text" /></td>
                     <th>水初始金额：</th>
-                    <td><input type="text" /></td>
+                    <td><input id="HWaterMoney" type="text" /></td>
                 </tr>
                 <tr>
                     <th>描述： </th>
-                    <td colspan="5"><textarea cols="70" rows="3"></textarea></td>
+                    <td colspan="5"><textarea id="HMark" cols="70" rows="3"></textarea></td>
                 </tr>
             </table>
+            <input type="hidden" id="HState" />
         </form>
-        <div class="h40"></div>
         <div class="div-bottom">
             <div class='btn-group'>
-                <button id='doOk' type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
-                <button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+                <button onclick="saveHInfo()" type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+                <button onclick="closeWin()" type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
             </div>
         </div>
     </div>
