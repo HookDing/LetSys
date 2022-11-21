@@ -86,6 +86,33 @@ namespace Bll
             }
         }
         /// <summary>
+        /// 获取所有数据
+        /// </summary>
+        /// <returns></returns>
+        public static List<Mod_Employs> GetAllMod()
+        {
+            using (LetDB db = new LetDB())
+            {
+                return db.Employs
+                    .Where(n => n.EmpState > 0)
+                    .Select(n => new Mod_Employs
+                    {
+                        EmpID = n.EmpID,
+                        EmpMark = n.EmpMark,
+                        EmpName = n.EmpName,
+                        EmpAdd = n.EmpAdd,
+                        EmpSex = n.EmpSex,
+                        EmpState = n.EmpState,
+                        EmpTel = n.EmpTel,
+                        LoginName = n.LoginName,
+                        DepID = n.DepID,
+                        DepName = n.Departments.DepName,
+                        DutyID = n.DutyID,
+                        DutyName = n.Dutys.DutyName,
+                    }).ToList();
+            }
+        }
+        /// <summary>
         /// 根据ID查询并返回一条数据
         /// </summary>
         /// <param name="id"></param>
@@ -107,7 +134,9 @@ namespace Bll
                         EmpTel = n.EmpTel,
                         LoginName = n.LoginName,
                         DepID = n.DepID,
+                        DepName = n.Departments.DepName,
                         DutyID = n.DutyID,
+                        DutyName = n.Dutys.DutyName,
                     }).ToList()[0];
             }
         }

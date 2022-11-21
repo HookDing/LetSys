@@ -40,11 +40,34 @@ namespace Bll
                 }
                 if (info.HArea != null)//范围查询
                 {
-                    where = where.Where(n => n.HArea > info.HArea);
+                    switch (info.HArea)
+                    {
+                        case 0://全部；
+                            break;
+                        case 30://30M²以下；
+                            where = where.Where(n => n.HArea > 0 && n.HArea <= 30);
+                            break;
+                        case 31://30M²-60M²；
+                            where = where.Where(n => n.HArea > 30 && n.HArea <= 60);
+                            break;
+                        case 61://60M²-100M²；
+                            where = where.Where(n => n.HArea > 60 && n.HArea <= 100);
+                            break;
+                        case 101://100M²-200M²；
+                            where = where.Where(n => n.HArea > 100 && n.HArea <= 200);
+                            break;
+                        case 201://200M²以上
+                            where = where.Where(n => n.HArea > 200);
+                            break;
+                    }
                 }
                 if (info.HState != null)
                 {
-                    where = where.Where(n => n.HState == info.HState);
+                    if (info.HState > 0)
+                    {
+                        where = where.Where(n => n.HState == info.HState);
+
+                    }
                 }
                 var list = where.OrderByDescending(n => n.HID).Skip((page - 1) * size).Take(size)
                   .Select(n => new Mod_HouseInfo

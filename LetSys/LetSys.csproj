@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChargeCategoryController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
@@ -3495,6 +3496,9 @@
     <Content Include="Views\HouseInfo\Index.cshtml" />
     <Content Include="Views\PayInfo\Index.cshtml" />
     <Content Include="Views\Chart\Index1.cshtml" />
+    <Content Include="Views\HouseInfo\LetView.cshtml" />
+    <Content Include="Views\HouseInfo\AddPayView.cshtml" />
+    <Content Include="Views\ChargeCategory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,6 +16,16 @@ namespace LetSys.Controllers
         {
             return View();
         }
+        public ActionResult LetView(int HID)
+        {
+            ViewBag.HID = HID;
+            return View();
+        }
+        public ActionResult AddPayView(int id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
         
         public ActionResult GetPageMod(int page, int rows, Mod_HouseInfo info)
         {

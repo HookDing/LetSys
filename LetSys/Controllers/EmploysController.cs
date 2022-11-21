@@ -30,6 +30,11 @@ namespace LetSys.Controllers
             var list =Bll_Employs.GetPageMod(page,rows,info,out count);
             return Json(new {rows=list,total=count});
         }
+        // GET: Employs/GetAllMod
+        public ActionResult GetAllMod()
+        {
+            return Json(Bll_Employs.GetAllMod());
+        }
         // GET: Employs/GetMod
         public ActionResult GetMod(int EmpID)
         {

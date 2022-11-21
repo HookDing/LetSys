@@ -1,0 +1,215 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
+    <script src="/Content/JS/jquery-easyui-1.4.1/jquery.easyui.extend.min.js"></script>
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/color.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/icon.css" rel="stylesheet" />
+    <link href="/Content/JS/jquery-easyui-1.4.1/themes/gray/easyui.css" rel="stylesheet" />
+    <link href="/Content/CSS/bootstrapall/css/bootstrap.css" rel="stylesheet" />
+    <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
+    <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
+    <link href="/Content/CSS/form.css" rel="stylesheet" />
+    <script>
+        //begin 初始方法
+        $(function () {
+            //房屋信息加载
+            $.post("/HouseInfo/GetMod", { "HID": $("body").attr("id") }, function (res) {
+                $("#HAdd").html(res.HAdd);
+                $("#HNum").html(res.HNum);
+                $("#HType").html(res.HType);
+                $("#HArea").html(res.HArea);
+                $("#HDirection").html(res.HDirection);
+                $("#HRent").html(res.HRent);
+                $("#HNet").html(res.HNet);
+                $("#HElectric").html(res.HElectric);
+                $("#HWater").html(res.HWater);
+                $("#HElectricMoney").html(res.HElectricMoney);
+                $("#HWaterMoney").html(res.HWaterMoney);
+                $("#HMark").html(res.HMark);
+                $("#HCName").html(res.HCName);
+            });
+            //加载用户选择框
+            $("#cg_Cus").combogrid({
+                url: '/Customers/GetAllMod',
+                panelWidth: 354,
+                idField: 'CusID',
+                textField: 'CusName',
+                columns: [[
+                    { field: 'CusName', title: '客户姓名', width: 100 },
+                    { field: 'CusSex', title: '性别', width: 100 },
+                    { field: 'CusCard', title: '身份证号码', width: 150 }
+                ]],
+                onChange(newdata, olddata) {
+                    $.post("/Customers/GetMod", { "id": newdata }, function (res) {
+                        $("#L_CusSex").html(res.CusSex);
+                        $("#L_CusCard").html(res.CusCard);
+                    })
+                }
+            });
+            //加载业务员选择框
+            $("#cg_Opt").combogrid({
+                url: '/Employs/GetAllMod',
+                panelWidth: 434,
+                idField: 'EmpID',
+                textField: 'EmpName',
+                columns: [[
+                    { field: 'EmpID', title: '员工编号', width: 60 },
+                    { field: 'EmpName', title: '姓名', width: 120 },
+                    { field: 'DepName', title: '部门', width: 120 },
+                    { field: 'DutyName', title: '职位', width: 120 }
+                ]]
+            });
+            //加载缴费表格
+            $("#PayTable").datagrid({
+                rownumbers: true,
+                singleSelect: true,
+                striped: true,
+                fitColumns: true,
+                toolbar: "#tableToolDiv",
+                height:200
+            });
+        })
+        //end 初始方法
+
+        //日期各式转换
+        function showDate(value) {
+            var date = new Date(parseInt(/\d+/.exec(value)[0]));
+            var year = parseInt(date.getFullYear(), 10);
+            if (year > 2500 || year < 1900) { return ""; }
+            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        }
+        //自定义按钮集
+        function showWork(value, data, index) {
+            return '<a href="#" onclick="openWin(' + index + ')">编辑</a>&nbsp;&nbsp;<a href="#" onclick="Del(' + index +')">删除</a>'
+        }
+        //begin缴费信息
+        function openWin(value) {
+            $.showModalDialog({
+                width: 700,
+                height: 400,
+                title: "添加缴费信息",
+                useiframe: true,
+                content: "url:/HouseInfo/AddPayView?id=" + $("body").attr("id"),
+                onLoad: function (win, content) {
+                    if (content) {
+                        content.doInit(win, function (data) {
+                            //在客户端增加一行数据
+                            $("#dataTable").datagrid("appendRow", data);
+                            sumData();
+                        });
+                    }
+                }
+            });
+        }
+        //end缴费信息
+    </script>
+</head>
+<body id="@ViewBag.HID">
+    <!--展示房屋信息-->
+    <div id="p" class="easyui-panel" title="房屋信息" style="padding: 10px;">
+        <table class="tableEdit">
+            <tr>
+                <th>房屋类别：</th>
+                <td style="width:300px;"><label id="HCName"></label></td>
+                <th>地址：</th>
+                <td style="width:300px;"><label id="HAdd"></label></td>
+                <th>房号：</th>
+                <td colspan="3"><label id="HNum"></label></td>
+            </tr>
+            <tr>
+                <th>户型：</th>
+                <td style="width:300px;"><label id="HType"></label></td>
+                <th>面积(M²)：</th>
+                <td><label id="HArea"></label></td>
+                <th>朝向：</th>
+                <td colspan="3"><label id="HDirection"></label></td>
+            </tr>
+            <tr>
+                <th>标准租金：</th>
+                <td style="width:300px;"><label id="HRent"></label></td>
+                <th>每月网费：</th>
+                <td colspan="5"><label id="HNet"></label></td>
+            </tr>
+            <tr>
+                <th>电单价：</th>
+                <td style="width:300px;"><label id="HElectric"></label></td>
+                <th>电剩余金额：</th>
+                <td><label id="HElectricMoney"></label></td>
+                <th>水单价：</th>
+                <td><label id="HWater"></label></td>
+                <th>水剩余金额：</th>
+                <td><label id="HWaterMoney"></label></td>
+            </tr>
+            <tr>
+                <th>房间备注信息：</th>
+                <td colspan="7"><label id="HMark"></label></td>
+            </tr>
+        </table>
+    </div>
+    <p></p>
+    <!--用户和业务员信息选择&展示-->
+    <div id="p" class="easyui-panel" title="租赁信息" style="padding: 10px;">
+        <table class="tableEdit">
+            <tr>
+                <th>客户姓名：</th>
+                <td style="width:300px;"><input id="cg_Cus" /></td>
+                <th>性别：</th>
+                <td style="width:300px;"><label id="L_CusSex"></label></td>
+                <th>身份证号码：</th>
+                <td><label id="L_CusCard"></label></td>
+            </tr>
+            <tr>
+                <th>业务员：</th>
+                <td style="width:300px;"><input id="cg_Opt" /></td>
+                <th>租赁开始日期：</th>
+                <td style="width:300px;"><input type="text" class="easyui-datebox" /></td>
+                <th>租赁结束日期：</th>
+                <td><input type="text" class="easyui-datebox" /></td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">
+                    <textarea style="width:98%" rows="3"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p></p>
+    <div id="p" class="easyui-panel" title="缴费信息" style="padding: 10px;">
+        <div id="tableToolDiv">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="openWin()">添加缴费</a>
+        </div>
+        <table id="PayTable" class="tableList" style="width:100%;">
+            <thead>
+                <tr>
+                    <th data-options="field:'CCID',width:150,formatter:showWork">操作</th>
+                    <th data-options="field:'CCName',width:100">缴费科目</th>
+                    <th data-options="field:'PayPrice',width:100">单价</th>
+                    <th data-options="field:'PayAmount',width:100">数量</th>
+                    <th data-options="field:'PayMoney1',width:100">应缴金额</th>
+                    <th data-options="field:'PayBeginDate',width:100,formatter:showDate(value)">开始时间</th>
+                    <th data-options="field:'PayEndDate',width:100,formatter:showDate(value)">结束时间</th>
+                    <th data-options="field:'PayMark',width:100">备注</th>
+                </tr>
+            </thead>
+        </table>
+        <p style="color: red;font-size: 20px;font-weight: bold;">合计金额：￥4500.00</p>
+    </div>
+    <p></p>
+    <div class="div-bottom">
+        <div class='btn-group'>
+            <button id='doOk' type='button' class='btn btn-default'><i class='glyphicon glyphicon-saved'></i>  保存</button>
+            <button id='doClose' type='button' class='btn btn-default'><i class='glyphicon glyphicon-remove'></i>  关闭</button>
+        </div>
+    </div>
+</body>
+</html>

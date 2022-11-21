@@ -27,6 +27,11 @@ namespace LetSys.Controllers
             var list = Bll_Customers.GetPageMod(page, rows, info, out count);
             return Json(new { rows = list, total = count });
         }
+        // POST: Customers/GetAllMod
+        public ActionResult GetAllMod()
+        {
+            return Json(Bll_Customers.GetAllMod());
+        }
         // POST: Customers/GetMod
         public ActionResult GetMod(int id)
         {

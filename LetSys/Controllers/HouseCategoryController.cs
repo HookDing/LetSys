@@ -29,6 +29,20 @@ namespace LetSys.Controllers
             arr.Add(new { id = -1, text = "全部", children = list });
             return Json(arr);
         }
+        public ActionResult GetAllMod()
+        {
+            var list = Bll_HouseCategory.GetAllMod().Select(n => new
+            {
+                id = n.HCID,
+                text = n.HCName,
+            }).ToList();
+            list.Insert(0,new
+            {
+                id = 0,
+                text = "请选择"
+            });
+            return Json(list);
+        }
         public ActionResult GetMod(int HCID)
         {
             return Json(Bll_HouseCategory.GetMod(HCID));

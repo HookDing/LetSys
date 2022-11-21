@@ -21,7 +21,7 @@
     <script>
         //初始化
         $(function () {
-            //加载数据
+            //加载树状列表数据
             $("#tt").tree({
                 lines: true,
                 url: "/HouseCategory/GetTree",
@@ -35,6 +35,7 @@
                     })
                 }
             });
+            //加载表格数据
             $("#dataTable").datagrid({
                 url: "/HouseInfo/GetPageMod",
                 pagination: true,
@@ -46,7 +47,7 @@
                 toolbar: "#tableToolDiv",
                 height: $(window).height() * 0.90
             });
-            //设置属性
+            //设置窗体属性
             $("#addCate,#addHouse").window({
                 collapsible: false,
                 minimizable: false,
@@ -56,12 +57,21 @@
                 closed: true,
                 center: true,
             });
+            //加载下拉框数据
+            $('#HCList').combobox({
+                url: '/HouseCategory/GetAllMod',
+                valueField: 'id',
+                textField: 'text'
+            });
         })
         //end 初始化
+
         //自定义工具链接
         function showWork(id) {
             return "<a href='javascript:openHInfo(" + id + ")'>编辑</a>&nbsp;&nbsp;<a href='javascript:deleteHInfo(" + id + ")'>删除</a>"
         }
+        //自定义房屋状态显示
+        var HState = { 0: "删除", 1: "待租", 2: "维护", 10: "已租" };
         //关闭窗体
         function closeWin() {
             $("#addCate,#addHouse").window({
@@ -86,8 +96,8 @@
         function getSelectedID() {
             var node = $('#tt').tree('getSelected');
             if (node == null) {
-                alert("您还未选择任何数据！");
-                return;
+                $.messager.alert('提示！', "您还未选择任何数据！");
+                return null;
             }
             return node.id
         }
@@ -124,7 +134,8 @@
         }
         //保存房屋类型数据
         function saveHCInfo() {
-            if ($("#HC").data["id"] == null) {//添加
+            //添加房屋类型
+            if ($("#HC").data["id"] == null) {
                 var info = new Object;
                 info.HCName = $("#t_HCName").val();
                 info.HCMark = $("#t_HCMark").val();
@@ -140,7 +151,8 @@
                     }
                 )
             }
-            if ($("#HC").data["id"] != null) {//修改
+            //修改房屋类型
+            else {
                 var info = new Object;
                 info.HCName = $("#t_HCName").val();
                 info.HCMark = $("#t_HCMark").val();
@@ -161,9 +173,13 @@
         }
         //删除房屋类型数据
         function deleteCate() {
+            var id = getSelectedID();
+            if (id == null) {//判断是否已选择
+                return;
+            }
             if (confirm("确认删除？")) {
                 $.post("/HouseCategory/Delete",
-                    { "HCID": getSelectedID() },
+                    { "HCID": id },
                     function (res) {
                         if (res = "true") {
                             showMsg("删除成功！")
@@ -182,8 +198,9 @@
             info.HAdd = $("#S_HAdd").val();
             info.HNum = $("#S_HNum").val();
             info.HType = $("#S_HType").val();
-            info.HArea = $("#HArea").val();
-            info.HState = $("#HState").val();
+            info.HArea = $("#A_HArea").val();
+            info.HState = $("#S_HState").val();
+            console.log(info)
             $("#dataTable").datagrid({
                 queryParams: {
                     info: info
@@ -192,11 +209,12 @@
         }
         //打开房屋信息窗体
         function openHInfo(value) {
-            if (value == null) {//新增
+            //新增房屋信息
+            if (value == null) {
                 $("#HI").data["id"] = null;
                 //清空数据
-                $("#HCID,#HAdd,#HNum,#HType,#HArea,#HDirection,#HRent").val(null);
-                $("#HNet,#HElectric,#HWater,#HElectricMoney,#HWaterMoney,#HMark,#HCName").val(null)
+                $("#HCList").combobox('setValue', 0);
+                $("#HAdd,#HNum,#HType,#HArea,#HDirection,#HRent,#HNet,#HElectric,#HWater,#HElectricMoney,#HWaterMoney,#HMark,#HCName").val(null)
                 //打开窗体
                 $("#addHouse").window({
                     title: "添加房屋信息",
@@ -204,12 +222,13 @@
                 });
 
             }
-            else {//修改
+            //修改房屋信息
+            else {
                 $("#HI").data["id"] = value;
                 //加载数据
                 $.post("/HouseInfo/GetMod", { "HID": value }, function (res) {
                     $("#HState").val(res.HState);
-                    $("#HCID").val(res.HCID);
+                    $("#HCList").combobox('setValue', res.HCID);
                     $("#HAdd").val(res.HAdd);
                     $("#HNum").val(res.HNum);
                     $("#HType").val(res.HType);
@@ -234,10 +253,11 @@
         }
         //保存房屋信息数据
         function saveHInfo() {
-            if ($("#HI").data["id"] == null) {//新增
+            //新增房屋信息
+            if ($("#HI").data["id"] == null) {
                 var info = new Object();
                 info.HState = $("#HState").val();
-                info.HCID = $("#HCID").val();
+                info.HCID = $("#HCList").combobox('getValue');;
                 info.HAdd = $("#HAdd").val();
                 info.HNum = $("#HNum").val();
                 info.HType = $("#HType").val();
@@ -262,11 +282,12 @@
                     }
                 })
             }
-            else {//修改
+            //修改房屋信息
+            else {
                 var info = new Object();
                 info.HID = $("#HI").data["id"];
                 info.HState = $("#HState").val();
-                info.HCID = $("#HCID").val();
+                info.HCID = $("#HCList").combobox('getValue');;
                 info.HAdd = $("#HAdd").val();
                 info.HNum = $("#HNum").val();
                 info.HType = $("#HType").val();
@@ -294,16 +315,30 @@
         }
         //删除房屋信息数据
         function deleteHInfo(HID) {
-            if (confirm("删除？")) {
-                $.post("/HouseInfo/Delete", { "HID": HID } , function (res) {
-                    if (res == true) {
-                        showMsg("删除成功！")
-                        $("#dataTable").datagrid("reload");
-                    }
-                })
-            }
+            $.messager.confirm('警告', '删除？', function (isdel) {
+                if (isdel) {
+                    $.post("/HouseInfo/Delete", { "HID": HID }, function (res) {
+                        if (res == true) {
+                            showMsg("删除成功！")
+                            $("#dataTable").datagrid("reload");
+                        }
+                    })
+                }
+            });
         }
         //end 表格操作(房屋信息)
+
+        //begin 租赁
+        function openLet() {
+            //验证是否已选择
+            var data = $("#dataTable").datagrid("getSelected");
+            if (data == null) {
+                showMsg("请选择需要操作的信息！")
+                return
+            }
+            window.parent.showTab("房屋出租", "/HouseInfo/LetView?HID=" + data.HID);
+        }
+        //end 租赁
     </script>
 </head>
 <body class="easyui-layout">
@@ -335,27 +370,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>面积：</th><!--HArea-->
+                        <th>面积：</th>
                         <td>
-                            <select>
-                                <option>全部</option>
-                                <option>30M²以下</option>
-                                <option>30M²-60M²</option>
-                                <option>60M²-100M²</option>
-                                <option>100M²-200M²</option>
-                                <option>200M²以上</option>
+                            <select id="S_HArea">
+                                <option value="0">全部</option>
+                                <option value="30">30M²以下</option>
+                                <option value="31">30M²-60M²</option>
+                                <option value="61">60M²-100M²</option>
+                                <option value="101">100M²-200M²</option>
+                                <option value="201">200M²以上</option>
                             </select>
                         </td>
-                        <th>状态：</th><!--HState-->
+                        <th>状态：</th>
                         <td>
-                            <select>
-                                <option>全部</option>
-                                <option>待租</option>
-                                <option>维护</option>
-                                <option>已租</option>
+                            <select id="S_HState">
+                                <option value="-1">全部</option>
+                                <option value="1">待租</option>
+                                <option value="2">维护</option>
+                                <option value="10">已租</option>
                             </select>
                         </td>
-                        <td style="padding-left:30px">
+                        <td colspan="2" style="padding-left:30px">
                             <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
                         </td>
                     </tr>
@@ -374,7 +409,7 @@
                     <th data-options="field:'HArea',width:100">面积</th>
                     <th data-options="field:'HDirection',width:100">朝向</th>
                     <th data-options="field:'HRent',width:100">租金</th>
-                    <th data-options="field:'HState',width:100">状态</th>
+                    <th data-options="field:'HState',width:100,formatter:function(value){return HState[value];}">状态</th>
                 </tr>
             </thead>
         </table>
@@ -412,11 +447,7 @@
                 <tr>
                     <th>所属房屋类型：</th><!--HCID HCName-->
                     <td colspan="3">
-                        <select>
-                            <option>公寓</option>
-                            <option>住宅</option>
-                            <option>门面</option>
-                        </select>
+                        <input id="HCList">
                     </td>
                 </tr>
                 <tr>
