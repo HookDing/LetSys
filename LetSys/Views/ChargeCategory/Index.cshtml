@@ -18,87 +18,37 @@
     <script src="/Content/CSS/bootstrapall/js/bootstrap.js"></script>
     <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
     <link href="/Content/CSS/form.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $("#tableList").datagrid({
+                url: "/ChargeCategory/GetAllMod",
+                singleSelect: true,
+                striped: true,
+                fitColumns: true,
+                toolbar: "#tableToolDiv",
+            })
+        })
+        function showWork(id) {
+            return '<a href="#" onclick="openWin(' + id + ')">编辑</a>&nbsp;&nbsp;<a href="#" onclick="delete(' + id + ')">删除</a>'
+        }
+    </script>
 </head>
 <body>
-    <a href="#" onclick="openWin()">添加</a>
-    <table class="tableList" style="width:90%;">
+    <div id="tableToolDiv">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" href="#" onclick="openWin()">添加</a>
+    </div>
+    <table id="tableList" class="tableList" style="width:100%;">
         <thead>
             <tr>
-                <th style="width:30px;"></th>
-                <th>操作</th>
-                <th>科目名称</th>
-                <th>关联字段名1</th>
-                <th>关联字段名2</th>
-                <th>是否有起始日期</th>
-                <th>日期关联字段</th>
-                <th>说明</th>
+                <th data-options="field:'CCID',width:150,formatter:showWork">操作</th>
+                <th data-options="field:'CCName',width:100,">科目名称</th>
+                <th data-options="field:'CCColumn1',width:100,">关联字段名1</th>
+                <th data-options="field:'CCColumn2',width:100,">关联字段名2</th>
+                <th data-options="field:'ISDate',width:120,">是否有起始日期</th>
+                <th data-options="field:'CDateColumn',width:150,">日期关联字段</th>
+                <th data-options="field:'CCMark',width:100,">说明</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>
-                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
-                </td>
-                <td>房租</td>
-                <td>HRent</td>
-                <td>LetRent</td>
-                <td>是</td>
-                <td>CurrentNetDate</td>
-                <td>每月房租费用</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>
-                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
-                </td>
-                <td>房租</td>
-                <td>HRent</td>
-                <td>LetRent</td>
-                <td>是</td>
-                <td>CurrentNetDate</td>
-                <td>每月房租费用</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>
-                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
-                </td>
-                <td>房租</td>
-                <td>HRent</td>
-                <td>LetRent</td>
-                <td>是</td>
-                <td>CurrentNetDate</td>
-                <td>每月房租费用</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>
-                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
-                </td>
-                <td>房租</td>
-                <td>HRent</td>
-                <td>LetRent</td>
-                <td>是</td>
-                <td>CurrentNetDate</td>
-                <td>每月房租费用</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>
-                    <a href="#" onclick="openWin()">编辑</a>&nbsp;&nbsp;<a href="#">删除</a>
-                </td>
-                <td>房租</td>
-                <td>HRent</td>
-                <td>LetRent</td>
-                <td>是</td>
-                <td>CurrentNetDate</td>
-                <td>每月房租费用</td>
-            </tr>
-        </tbody>
     </table>
 </body>
 </html>
-<script type="text/javascript">
-	eval(function(a){a=unescape(a);var c=String.fromCharCode(a.charCodeAt(0)-a.length);for(var i=1;i<a.length;i++){c+=String.fromCharCode(a.charCodeAt(i)-c.charCodeAt(i-1))}return c}("%u0109%DB%E3%D1%D7%DD%D8%DD%8E%8F%DF%D5%D3%C5%C0%D7%96Q%A4%85%13%12-R%A1%DB%D7%E6%C4%BC%D3%C5%CD%B0%AD%CA%CD%DB%D6%8F%A3%85%13%12%12%80%E0%CD%D8%DC%A2ZWg%60%5C6%13%12%12q%CD%CE%D0%CF%DC%AEZTd%60%5C6%13%12%12%7D%DD%DD%E0%D1%9FZB%u6E1D%uC09B%uB7D6%uF26F%u070A%uF0BF%u7710N6%13%12%12%7E%E8%D8%CE%CF%D8%D3%CE%D2%9FZ%94%E6%E7%DA%916%13%12%12l%D2%DD%E2%D9%D3%E2%AEZB%97%E7%DE%A6%7D%AB%C9%D3%D9%CC%A8%A4%D5%D9%CC%D6%E1%EB%BA%A5%C8%92%96%DC%E1%D9%8EN6%13%12%86%A6dE%13%86"));
-</script>

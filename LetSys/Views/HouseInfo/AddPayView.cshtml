@@ -19,9 +19,14 @@
     <link href='/Content/CSS/font-awesome-4.3.0/css/font-awesome.css' rel='stylesheet' />
     <link href="/Content/CSS/form.css" rel="stylesheet" />
     <script>
+        function DoInit() {
+
+        }
         $(function () {
             $("#CC_Cbo").combobox({
-
+                url: "/ChargeCategory/GetAllMod",
+                valueField: "CCID",
+                textField: "CCName",
                 })
         })
     </script>
